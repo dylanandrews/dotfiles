@@ -17,8 +17,6 @@ fi
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
 [[ -s "$HOME/.bashrc" ]] && source "$HOME/.bashrc" # Load the default .bashrc
 
-export HOMEBREW_GITHUB_API_TOKEN=8822f29c6487f6d856c356c92753ba9b9fa3cf07
-
 function parse_git_dirty {
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
 }
