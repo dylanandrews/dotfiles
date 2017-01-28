@@ -1,0 +1,33 @@
+name: Development
+root: ~/Desktop/GoNoodle
+
+windows:
+  - gonoodle:
+      layout: even-horizontal
+      panes:
+        - Server:
+          - cd gonoodle && bundle exec rails server
+        - Guard:
+          - cd gonoodle && bundle exec guard
+  - gn-web:
+      layout: even-horizontal
+      panes:
+        - Server:
+          - cd gn-web && npm start
+  - accounts:
+      layout: even-horizontal
+      panes:
+        - Server:
+          - cd accounts && bundle exec rails server -p 3001
+        - Guard:
+          - cd accounts
+  - marketing:
+      layout: even-horizontal
+      panes:
+        - Gulp Serve:
+          - cd gn-marketing && npm install && gulp serve
+  - signup:
+      layout: even-horizontal
+      panes:
+        - Server:
+          - cd gn-sign-up && npm start
