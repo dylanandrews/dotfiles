@@ -88,6 +88,10 @@ source $ZSH/oh-my-zsh.sh
 alias be='bundle exec'
 alias lst='tree'
 alias g='git'
+alias gn='cd ~/Desktop/Gonoodle/Gonoodle'
+alias gnw='cd ~/Desktop/Gonoodle/gn-web'
+alias gna='cd ~/Desktop/Gonoodle/gn-accounts'
+alias h='cd ~'
 eval "$(rbenv init -)"
 export PATH="$HOME/.yarn/bin:$HOME/.rbenv/bin:$PATH"
 
