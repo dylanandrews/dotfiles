@@ -1,0 +1,14 @@
+resetdb() {
+    if [[ $1 = '-f' ]] || [[ $1 = '--full' ]];
+    then
+        echo "DB Reset (full)"
+        FULL=1 bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall
+    elif [[ $1 = '-s' ]] || [[ $1 = '--simple' ]];
+    then
+        echo "DB Reset (simple)"
+        bundle exec rake log:clear db:drop db:create db:schema:load && bundle exec rake db:test:prepare && redis-cli flushall
+    else
+        echo "DB Reset"
+        bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall
+    fi
+}
