@@ -1,6 +1,6 @@
 # Personal dotfiles
 
-This is inspired by thoughtbot's [dotfiles](https://github.com/thoughtbot/dotfiles.git), as well as [David Calhoun's](https://github.com/dcalhoun/dotfiles). Constantly a work in progress.
+99.9% of this is copied from [Chrisian Hall's](https://github.com/jchristianhall) glorious dotifles. Thanks to him for all the help.
 
 ## Install
 
@@ -52,8 +52,3 @@ Shell aliases and scripts:
 - `g` with no arguments is `git status` and with arguments acts like `git`.
 - `mcd` to make a directory and change into it.
 - `v` for `$VISUAL`.
-
-## Todo
-
-- Manage VSCode in this repo?
-- Manage MacOS system prefs with `.macos`
