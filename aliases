@@ -1,0 +1,52 @@
+# Unix
+alias ll="ls -al"
+alias ln="ln -v"
+alias mkdir="mkdir -p"
+alias e="$EDITOR"
+alias v="$VISUAL"
+alias cc="say 'Command complete'"
+
+# Git
+alias gaac="g aa && g ci"
+alias gacm="g aa && g ci --amend"
+alias g="hub"
+
+# Node
+alias ygls="yarn global list"
+alias yga="yarn global add"
+alias yi="yarn install"
+alias yr="yarn run"
+alias ys="yarn start"
+alias ngls="npm list -g --depth 0"
+
+# GoNoodle API
+alias b="bundle"
+alias be="bundle exec"
+alias bi="bundle install --path vendor"
+alias bp="bundle package"
+alias mi="bundle exec rake db:migrate"
+alias gns="bundle exec rails s -b 0.0.0.0"
+alias gnr="RESQUE_INLINE=1 bundle exec rails s -b 0.0.0.0"
+alias nukedb="bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall"
+alias nukedbf="FULL=1 bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall"
+alias gnfs="PORT=8082 yarn start:debug"
+alias be='bundle exec'
+alias lst='tree'
+
+alias g='git'
+alias gn='cd ~/Documents/gonoodle/gn-api'
+alias gnw='cd ~/Documents/gonoodle/gn-web'
+alias gnf='cd ~/Documents/gonoodle/gn-web-family'
+alias gnp='cd ~/Documents/gonoodle/gn-packages'
+alias h='cd ~'
+alias pos='git pull origin staging'
+alias cos='git checkout staging'
+alias prm='pull-request -m'
+alias rc='bundle exec rails console'
+alias resetdb='bundle exec rake db:create:all db:schema:load db:seed'
+
+# tmux
+alias tmux="tmuxinator"
+
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
