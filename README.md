@@ -13,7 +13,7 @@
 1. Clone and run setup script:
 
    ```
-   git clone git@github.com:jchristianhall/dotfiles.git ~/.dotfiles
+   git clone git@github.com:dylanandrews/dotfiles.git ~/.dotfiles
    ~/.dotfiles/setup.sh
    ```
 
