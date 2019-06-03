@@ -14,8 +14,13 @@
 
    ```
    git clone git@github.com:dylanandrews/dotfiles.git ~/.dotfiles
+
    ~/.dotfiles/setup.sh
+
+   apm install --packages-file packages.txt
    ```
+
+```
 
 ## What's in it?
 
@@ -25,7 +30,7 @@
 - Adds a `delete-branch` alias to delete feature branches.
 - Adds a `merge-branch` alias to merge feature branches into master.
 - Adds an `up` alias to fetch and rebase `origin/master` into the feature
-  branch. Use `git up -i` for interactive rebases.
+branch. Use `git up -i` for interactive rebases.
 - Adds lots of aliases for common commands.
 - Makes output pretty with `diff-so-fancy`.
 - Sets smart defaults for lots of things like `.gitignore`, etc.
@@ -52,3 +57,4 @@ Shell aliases and scripts:
 - `g` with no arguments is `git status` and with arguments acts like `git`.
 - `mcd` to make a directory and change into it.
 - `v` for `$VISUAL`.
+```
