@@ -44,6 +44,7 @@ alias cos='git checkout staging'
 alias prm='pull-request -m'
 alias rc='bundle exec rails console'
 alias resetdb='bundle exec rake db:create:all db:schema:load db:seed'
+alias rtp = 'bundle exec rake db:test:prepare'
 
 # tmux
 alias tmux="tmuxinator"
