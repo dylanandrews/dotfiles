@@ -10,6 +10,7 @@ alias cc="say 'Command complete'"
 alias gaac="g aa && g ci"
 alias gacm="g aa && g ci --amend"
 alias g="hub"
+alias	hb="hub browse"
 
 # Node
 alias ygls="yarn global list"
@@ -44,7 +45,7 @@ alias cos='git checkout staging'
 alias prm='pull-request -m'
 alias rc='bundle exec rails console'
 alias resetdb='bundle exec rake db:create:all db:schema:load db:seed'
-alias rtp = 'bundle exec rake db:test:prepare'
+alias rtp='bundle exec rake db:test:prepare'
 
 # tmux
 alias tmux="tmuxinator"
