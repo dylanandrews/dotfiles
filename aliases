@@ -48,7 +48,7 @@ alias resetdb='bundle exec rake db:create:all db:schema:load db:seed'
 alias rtp='bundle exec rake db:test:prepare'
 
 # tmux
-alias tmux="tmuxinator"
+# alias tmux="tmuxinator"
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
