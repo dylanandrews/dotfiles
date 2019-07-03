@@ -45,9 +45,11 @@ alias psy='cd ~/Documents/psych_hub/psych-hub'
 alias h='cd ~'
 alias pos='git pull origin staging'
 alias cos='git checkout staging'
-alias prm='hub pull-request -m'
+alias prm='hub pull-request -m  '
 alias rc='bundle exec rails console'
 alias resetdb='bundle exec rake db:create:all db:schema:load db:seed'
+alias rdm='bundle exec rake db:migrate'
+alias rdr='bundle exec rake db:rollback'
 alias rtp='bundle exec rake db:test:prepare'
 
 # tmux
