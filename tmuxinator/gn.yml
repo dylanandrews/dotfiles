@@ -20,9 +20,9 @@ root: ~/Documents/gonoodle
 
 windows:
   - gn-api:
-      - cd gn-api && bundle exec rails server -p 3000 -b 0.0.0.0
+      - cd gn-api && DISABLE_JOBS=true bundle exec rails s
   - gn-web-family:
-      - cd gn-family-web && PORT=8082 yarn start:debug
+      - cd gn-family-web && yarn start --port 8081
   - gn-web:
       - cd gn-educator-web && yarn start
   - gn-marketing:
