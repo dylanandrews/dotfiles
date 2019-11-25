@@ -78,6 +78,3 @@ nnoremap <C-l> <C-w>l
 
 " Autocomplete with dictionary words when spell check is on
 set complete+=kspell
-
-" Always use vertical diffs
-set diffopt+=vertical
