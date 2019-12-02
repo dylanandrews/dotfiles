@@ -22,7 +22,7 @@ windows:
   - gn-api:
       - cd gn-api && DISABLE_JOBS=true bundle exec rails s
   - gn-web-family:
-      - cd gn-family-web && yarn start --port 8081
+      - cd gn-family-web && yarn start --port 8082
   - gn-web:
       - cd gn-educator-web && yarn start
   - gn-marketing:
