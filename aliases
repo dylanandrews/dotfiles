@@ -20,6 +20,9 @@ alias yr="yarn run"
 alias ys="yarn start"
 alias ngls="npm list -g --depth 0"
 
+# EXA
+alias ls="exa"
+
 # GoNoodle API
 alias b="bundle"
 alias be="bundle exec"

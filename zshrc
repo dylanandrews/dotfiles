@@ -53,3 +53,5 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # asdf
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
