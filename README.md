@@ -20,6 +20,12 @@
    apm install --packages-file packages.txt
    ```
 
+2. Notes on brew files
+  * `fzf` - need to run `/usr/local/opt/fzf/install` after installing
+
+2. Atom
+  * `apm install --packages-file .dotifles/packages.txt` to install packages
+
 ```
 
 ## What's in it?
@@ -57,4 +63,5 @@ Shell aliases and scripts:
 - `g` with no arguments is `git status` and with arguments acts like `git`.
 - `mcd` to make a directory and change into it.
 - `v` for `$VISUAL`.
+
 ```
