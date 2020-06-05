@@ -1,16 +1,14 @@
 # Personal dotfiles
 
-99.9% of this is copied from [Chrisian Hall's](https://github.com/jchristianhall) glorious dotifles. Thanks to him for all the help.
-
 ## Install
 
 1. Download Xcode and CLI utilities
 
-1. [Setup SSH key with GitHub](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
+2. [Setup SSH key with GitHub](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 
    Be sure to permanently add the key in `~/.ssh/config`
 
-1. Clone and run setup script:
+3. Clone and run setup script:
 
    ```
    git clone git@github.com:dylanandrews/dotfiles.git ~/.dotfiles
@@ -20,11 +18,14 @@
    apm install --packages-file packages.txt
    ```
 
-2. Notes on brew files
+4. Notes on brew files
   * `fzf` - need to run `/usr/local/opt/fzf/install` after installing
 
-2. Atom
+5. Atom
   * `apm install --packages-file .dotifles/packages.txt` to install packages
+
+6. `mysql`
+  * `gem install --install-dir ./vendor/ruby/2.6.0/ mysql2 -v '0.5.3' -- --with-ldflags=-L/usr/local/opt/openssl/lib --with-cppflags=-I/usr/local/opt/openssl/include --with-mysql-dir=$(brew --prefix mysql@5.6)` - this is a GN specific error
 
 ```
 
