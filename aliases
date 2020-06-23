@@ -56,6 +56,10 @@ alias rdr='bundle exec rake db:rollback'
 alias rtp='bundle exec rake db:test:prepare'
 alias bss='bundle exec spring stop'
 
+# Weatherfetch gem
+alias wfd='weatherfetch daily 37205'
+alias wfh='weatherfetch hourly 37205'
+
 # tmux
 # alias tmux="tmuxinator"
 
