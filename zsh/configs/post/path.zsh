@@ -25,6 +25,9 @@ export PATH=~/bin:$PATH
 # EB CLI
 export PATH=~/Library/Python/2.7/bin:$PATH
 
+# Sem Versioner
+export PATH=$HOME/.asdf/installs/python/3.6.2/bin:$PATH
+
 # GN API
 export RACK_ENV='development'
 
