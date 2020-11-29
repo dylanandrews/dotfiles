@@ -41,6 +41,7 @@ alias lst='tree'
 
 alias atom='open -a Atom'
 alias g='git'
+alias tj='cd ~/Documents/personal_dev/tj/taxjar'
 alias gn='cd ~/Documents/gonoodle/gn-api'
 alias gnw='cd ~/Documents/gonoodle/gn-educator-web'
 alias gnf='cd ~/Documents/gonoodle/gn-family-web'
