@@ -32,8 +32,6 @@ alias rdr="bundle exec rake db:migrate"
 alias bi="bundle install --path vendor"
 alias bp="bundle package"
 alias mi="bundle exec rake db:migrate"
-alias gns="bundle exec rails s -b 0.0.0.0"
-alias gnr="RESQUE_INLINE=1 bundle exec rails s -b 0.0.0.0"
 alias nukedb="bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall"
 alias nukedbf="FULL=1 bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall"
 alias gnfs="PORT=8082 yarn start:debug"
@@ -44,6 +42,7 @@ alias atom='open -a Atom'
 alias g='git'
 alias tj='cd ~/Documents/tj/taxjar'
 alias h='cd ~'
+alias dot='cd ~/.dotfiles'
 alias pos='git pull origin staging'
 alias cos='git checkout staging'
 alias prm='hub pull-request -m  '
@@ -58,7 +57,8 @@ alias wfd='weatherfetch daily 37205'
 alias wfh='weatherfetch hourly 37205'
 
 # tmux
-# alias tmux="tmuxinator"
+alias mux="tmuxinator"
+alias tk="tmux kill-server"
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
