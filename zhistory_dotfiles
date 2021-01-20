@@ -4587,3 +4587,56 @@ git st
 rm zhistory_drop_box
 git st
 git add .
+git ci -m'Set up tj tmux'
+git push
+tmuxinator tj
+cd /Users/dylanandrews/Documents/tj
+cd taxjar && bundle exec rails s
+cd tax-rate-service && bundle exec rails s -p 3001
+bi
+bundle install
+tmux kill-server
+tj
+ls
+bundle install
+bundle exec rails s
+ls
+cd ..
+ls
+cd taxjar
+cd ..
+ls
+cd ..
+ls
+./install_taxjar -v ~/Documents/tj/taxjar
+cd tj
+cd ..
+cd tjsetup
+./install_taxjar -v ~/Documents/tj/taxjar
+gj
+tj
+bundle exec rails s
+tmuxinator tj
+cd /Users/dylanandrews/Documents/tj
+cd taxjar && bundle exec rails s
+cd tax-rate-service && bundle exec rails s -p 3001
+bundle install
+tmux kill-server
+cd /Users/dylanandrews/Documents/tj
+cd tax-rate-service && bundle exec rails s -p 3001
+cd taxjar && bundle exec rails s
+tk
+tmux kill-server
+tk
+mux tj
+cd /Users/dylanandrews/Documents/tj
+cd taxjar && bundle exec rails s
+cd tax-rate-service && bundle exec rails s -p 3001
+h
+cd .dotfiles
+dot
+git st
+git diff
+git st
+git diff aliases
+git add .
