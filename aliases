@@ -11,6 +11,7 @@ alias gaac="g aa && g ci"
 alias gacm="g aa && g ci --amend"
 alias g="hub"
 alias	hb="hub browse"
+alias cor="git recent | hs | xargs git checkout"
 
 # Node
 alias ygls="yarn global list"
@@ -41,12 +42,7 @@ alias lst='tree'
 
 alias atom='open -a Atom'
 alias g='git'
-alias tj='cd ~/Documents/personal_dev/tj/taxjar'
-alias gn='cd ~/Documents/gonoodle/gn-api'
-alias gnw='cd ~/Documents/gonoodle/gn-educator-web'
-alias gnf='cd ~/Documents/gonoodle/gn-family-web'
-alias gnp='cd ~/Documents/gonoodle/gn-family-native'
-alias psy='cd ~/Documents/psych_hub/psych-hub'
+alias tj='cd ~/Documents/tj/taxjar'
 alias h='cd ~'
 alias pos='git pull origin staging'
 alias cos='git checkout staging'
