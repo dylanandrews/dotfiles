@@ -1,7 +1,7 @@
-# ~/.tmuxinator/gn.yml
+# ~/.tmuxinator/tj.yml
 
-name: GN Web
-root: ~/Documents/gonoodle
+name: TJ
+root: ~/Documents/tj
 
 # Optional tmux socket
 # socket_name: foo
@@ -19,11 +19,7 @@ root: ~/Documents/gonoodle
 # tmux_command: byobu
 
 windows:
-  - gn-api:
-      - cd gn-api && DISABLE_JOBS=true bundle exec rails s
-  - gn-web-family:
-      - cd gn-family-web && yarn start --port 8082
-  - gn-web:
-      - cd gn-educator-web && yarn start
-  - gn-marketing:
-      - cd gn-marketing && yarn start
+  - taxjar:
+      - cd taxjar && bundle exec rails s
+  - tax-rate-service:
+      - cd tax-rate-service && bundle exec rails s -p 3001
