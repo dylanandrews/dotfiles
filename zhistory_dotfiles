@@ -4466,3 +4466,124 @@ ll
 code .zhistory
 hello
 foo
+tj
+cd ..
+ls
+cd tax-rate-service
+hb
+tmux taxjar
+gem install tmuxinator
+tmux taxjar
+tmuxinator taxjar
+tmuxinator doctor
+gem install tmuxinator
+echo $EDITOR
+wget https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh -O /usr/local/share/zsh/site-functions/_tmuxinator
+# wget https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh -O /usr/local/share/zsh/site-functions/_tmuxinator\
+
+wget https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh -O /usr/local/share/zsh/site-functions/_tmuxinator
+brew install tmuxinator
+tmuxinator doctor
+gem uninstall tmuxinator
+tmuxinator taxjar
+h
+cd .gem/bin
+ll
+rm -rf tmuxinator
+ll
+gem uninstall tmuxinator
+brew install tmuxinator
+brew list
+tmuxinator taxjar
+tmuxinator tj
+tmuxinator gn
+cd gn-educator-web && yarn start
+cd /Users/dylanandrews/Documents/gonoodle
+cd gn-api && DISABLE_JOBS=true bundle exec rails s
+cd gn-family-web && yarn start --port 8082
+cd gn-marketing && yarn start
+tmux ls
+tmux kill-session -t GN Web
+tmux ls
+tmux kill-session -t gonoodkle
+tmux kill-session -t gonoodle
+tmux ls
+tmux kill-session -t GN Web
+tmux kill-server
+tmux ls
+code .
+git st
+h
+code .dotfiles
+git st
+tj
+code .
+h
+cd .dotfiles
+code .
+tmuxinator taxjar
+tmuxinator tj
+tmuxinator gonoodle
+tmux gonoodle
+tmux gn
+tmuxinator gn
+cd /Users/dylanandrews/Documents/gonoodle
+cd gn-educator-web && yarn start
+cd gn-api && DISABLE_JOBS=true bundle exec rails s
+cd gn-family-web && yarn start --port 8082
+cd gn-marketing && yarn start
+tmux kill-server
+tmux taxjar
+tmuxinator taxjar
+tmux gn
+tmuxinator gn
+cd /Users/dylanandrews/Documents/gonoodle
+cd gn-api && DISABLE_JOBS=true bundle exec rails s
+cd gn-marketing && yarn start
+cd gn-family-web && yarn start --port 8082
+tmux kill-server
+cd gn-educator-web && yarn start
+tmuxinator tj
+tmuxinator gn
+cd /Users/dylanandrews/Documents/tj
+cd tax-rate-service && bundle exec rails s -p 3001
+cd taxjar && bundle exec rails s
+h
+ll
+code .tmuxinator
+h
+ll
+code .tmuxinator
+cd .tmuxinator
+touch .tj
+ls
+touch tj.yml
+ll
+rm .tj
+ll
+rm tj.yml
+ln -s tj.yml ~/Users/dylanandrews/.dotfiles/tmuxinator/tj.yml
+ln -s ~/Users/dylanandrews/.dotfiles/tmuxinator/tj.yml tj.yml
+ll
+ln -s .dotfiles/tmuxinator/tj.yml tj.yml
+ln -s ~/.dotfiles/tmuxinator/tj.yml tj.yml
+rm tj.yml
+ll
+ln -s ~/.dotfiles/tmuxinator/tj.yml tj.yml
+ll
+tmuxinator tj
+git st
+git pull origin develop
+tmux kill-server
+h
+cd .tmuxinator
+ll
+rm gn.yml
+rm gn-rn.yml
+ll
+git st
+git diff
+git st
+rm zhistory_drop_box
+git st
+git add .
