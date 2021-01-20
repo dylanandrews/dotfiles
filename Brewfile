@@ -2,10 +2,19 @@ tap 'caskroom/cask'
 tap 'homebrew/cask-fonts'
 tap 'thoughtbot/formulae'
 tap 'caskroom/versions'
+tap "rschmitt/heatseeker"
 
+brew 'autojump'
+brew 'bat'
 brew 'diff-so-fancy'
+# For recent git command with cor alias
+brew 'heatseeker'
 brew 'hub'
+# Pretty printing json
+brew 'jsonpp'
 brew 'jump'
+# Pretty printing sql
+brew 'pgformatter'
 brew 'rcm'
 brew 'tmux'
 brew 'tree'
