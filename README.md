@@ -31,6 +31,16 @@
 
 8. Add [relaxed theme](https://github.com/Relaxed-Theme/relaxed-terminal-themes#installation-1) to iterm2 by dowloading the colors and then importing them into iterm.
 
+## Mac Settings
+
+1. Finder > View > Show Path
+
+2. Finder > View > Show Status
+
+3. Invert Scrolling
+
+4. General > Always show scroll bar
+
 ```
 
 ## What's in it?

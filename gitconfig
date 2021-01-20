@@ -26,6 +26,7 @@
   rb = rebase -i
   rl = reflog --pretty=reflog
   st = status
+	recent = "!f() { git reflog | awk '$3 == \"checkout:\" { if (0 == branches[$8]++ && show_output != \"\") { print $8 }; show_output = \"yes\" }' | head -n ${1:-10}; }; f"
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
