@@ -22,4 +22,4 @@ windows:
   - taxjar:
       - cd taxjar && bundle exec rails s
   - tax-rate-service:
-      - cd tax-rate-service && bundle exec rails s -p 3001
+      - cd tax-rate-service && bundle exec rails s -p 3002
