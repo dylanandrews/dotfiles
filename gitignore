@@ -20,4 +20,4 @@ bower_components
 .Thumbs.db
 .Trashes
 .Spotlight-V100
-zhistory_dotfiles
+/zhistory_dotfiles

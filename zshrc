@@ -39,9 +39,6 @@ _load_settings() {
 }
 _load_settings "$HOME/.zsh/configs"
 
-# This puts zsh history in my dotfiles
-HISTFILE=~/.dotfiles/zhistory_dotfiles
-
 # Aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
