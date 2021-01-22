@@ -38,9 +38,12 @@ alias gnfs="PORT=8082 yarn start:debug"
 alias be='bundle exec'
 alias lst='tree'
 
+# Taxjar
+alias tj='cd ~/Documents/tj/taxjar'
+alias trs='cd ~/Documents/tj/tax-rate-service'
+
 alias atom='open -a Atom'
 alias g='git'
-alias tj='cd ~/Documents/tj/taxjar'
 alias h='cd ~'
 alias dot='cd ~/.dotfiles'
 alias pos='git pull origin staging'
