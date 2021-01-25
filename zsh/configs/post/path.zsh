@@ -26,7 +26,7 @@ export PATH=~/bin:$PATH
 export PATH=~/Library/Python/2.7/bin:$PATH
 
 # Sem Versioner
-export PATH=$HOME/.asdf/installs/python/3.6.2/bin:$PATH
+export PATH=$HOME/Library/Python/3.9/bin:$PATH
 
 # GN API
 export RACK_ENV='development'
