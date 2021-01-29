@@ -23,5 +23,7 @@ windows:
       - cd taxjar && bundle exec rails s
   - tax-rate-service:
       - cd tax-rate-service && bundle exec rails s -p 3002
+  - ex_smartcalcs:
+      - cd ex_smartcalcs && mix phx.server
   - taxjar-sidekiq:
       - cd taxjar && SIDEKIQ_CONCURRENCY=5 bundle exec sidekiq -C config/sidekiq.yml
