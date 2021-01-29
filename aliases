@@ -41,6 +41,7 @@ alias lst='tree'
 # Taxjar
 alias tj='cd ~/Documents/tj/taxjar'
 alias trs='cd ~/Documents/tj/tax-rate-service'
+alias bep='bundle exec pronto run -c origin/master --unstaged'
 
 alias atom='open -a Atom'
 alias g='git'
