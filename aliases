@@ -84,3 +84,17 @@ function resetdb {
   echo "Preparing Test DB"
   RAILS_ENV=test bundle exec rails db:drop db:create db:schema:load
 }
+
+function rtdb {
+  echo "Preparing Test DB"
+  bin/rails db:environment:set RAILS_ENV=test
+  RAILS_ENV=test bundle exec rake db:drop db:create db:structure:load tax_rules:db:create tax_rules:db:migrate
+  RAILS_ENV=test bundle exec rake bulk_storage:db:drop bulk_storage:db:create bulk_storage:db:structure:load
+  RAILS_ENV=test bundle exec rake shards:drop shards:create
+  psql tj_test_transactions_shard0 < ./db/tranx_shards_structure.sql
+  psql tj_test_transactions_shard1 < ./db/tranx_shards_structure.sql
+  psql tj_test_receipt_item_taxes_shard0 < ./db/rits_shards_structure.sql
+  psql tj_test_receipt_item_taxes_shard1 < ./db/rits_shards_structure.sql
+  RAILS_ENV=test bundle exec rake db:migrate
+  echo "DONE!"
+}
