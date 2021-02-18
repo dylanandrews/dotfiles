@@ -16,6 +16,7 @@ brew 'jump'
 # Pretty printing sql
 brew 'pgformatter'
 brew 'rcm'
+brew 'tldr'
 brew 'tmux'
 brew 'tree'
 brew 'yarn'

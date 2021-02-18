@@ -37,6 +37,7 @@ alias nukedbf="FULL=1 bundle exec rake log:clear db:reset && bundle exec rake db
 alias gnfs="PORT=8082 yarn start:debug"
 alias be='bundle exec'
 alias lst='tree'
+alias gn='cd ~/Dropbox/GoNoodle/gn-api\ copy/'
 
 # Taxjar
 alias tj='cd ~/Documents/tj/taxjar'
