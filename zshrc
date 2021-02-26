@@ -57,3 +57,6 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Jump
 eval "$(jump shell)"
+alias awsume=". awsume" 
+alias awsume=". awsume" 
+alias awsume=". awsume" 
