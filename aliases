@@ -56,6 +56,7 @@ alias rdm='bundle exec rake db:migrate'
 alias rdr='bundle exec rake db:rollback'
 alias rtp='bundle exec rake db:test:prepare'
 alias bss='bundle exec spring stop'
+alias awsstaging='awsume staging && kubectl config use-context staging'
 
 # Weatherfetch gem
 alias wfd='weatherfetch daily 37205'
