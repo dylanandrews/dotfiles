@@ -12,6 +12,9 @@ alias gacm="g aa && g ci --amend"
 alias g="hub"
 alias	hb="hub browse"
 alias cor="git recent | hs | xargs git checkout"
+alias grh="git reset --hard"
+alias so="source /Users/dylanandrews/.dotfiles/aliases"
+alias gpo="git pull origin $(git branch --show-current)"
 
 # Node
 alias ygls="yarn global list"
