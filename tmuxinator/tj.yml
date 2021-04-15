@@ -27,3 +27,5 @@ windows:
       - cd ex_smartcalcs && mix phx.server
   - taxjar-sidekiq:
       - cd taxjar && SIDEKIQ_CONCURRENCY=5 bundle exec sidekiq -C config/sidekiq.yml
+  - filing-api:
+      - cd filing_api && bundle exec rails s -p 3001

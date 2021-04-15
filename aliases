@@ -68,6 +68,10 @@ alias wfh='weatherfetch hourly 37205'
 # tmux
 alias mux="tmuxinator"
 alias tk="tmux kill-server"
+alias ls32="lsof -ti tcp:3002 | xargs kill"
+alias ls31="lsof -ti tcp:3001 | xargs kill"
+alias ls30="lsof -ti tcp:3000 | xargs kill"
+alias lsall="lsof -ti tcp:3002 | xargs kill;lsof -ti tcp:3001 | xargs kill;lsof -ti tcp:3000 | xargs kill"
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
