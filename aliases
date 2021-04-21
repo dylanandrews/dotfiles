@@ -48,6 +48,7 @@ alias gn='cd ~/Dropbox/GoNoodle/gn-api\ copy/'
 alias tj='cd ~/Documents/tj/taxjar'
 alias trs='cd ~/Documents/tj/tax-rate-service'
 alias bep='bundle exec pronto run -c origin/master --unstaged'
+alias sf='SKIP_FIXTURES=true'
 
 alias atom='open -a Atom'
 alias g='git'
