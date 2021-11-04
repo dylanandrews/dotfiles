@@ -1,3 +1,11 @@
+# ssh dylanandrews@dylanandrewsmbp.attlocal.net
+autoload -Uz compinit; compinit
+autoload -Uz bashcompinit; bashcompinit
+source ~/.bash_profile
+source ~/.bashrc
+eval "$(nodenv init -)"
+compdef _git stripe-git=git # this line specifically will fix git autocompletion
+
 # Load custom executable functions
 for function in ~/.zsh/functions/*; do
   source $function
@@ -54,9 +62,4 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 . $HOME/.asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Jump
-eval "$(jump shell)"
-alias awsume=". awsume" 
-alias awsume=". awsume" 
 alias awsume=". awsume" 
