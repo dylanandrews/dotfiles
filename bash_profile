@@ -3,11 +3,6 @@ for file in ~/.{bash_prompt,aliases}; do
 done
 unset file
 
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend
-
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
 
 # Exports
 # Don’t clear the screen after quitting a manual page
@@ -21,6 +16,7 @@ export LANG="en_US"
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
+source ~/.rbenvrc
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"

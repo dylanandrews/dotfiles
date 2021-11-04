@@ -28,15 +28,7 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 # Sem Versioner
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
 
-# GN API
-export RACK_ENV='development'
-
-# ANDROID STUDIO
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$HOME/stripe/space-commander/bin:$PATH
 
 # FASTLANE
 export PATH="$HOME/.fastlane/bin:$PATH"

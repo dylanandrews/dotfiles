@@ -9,9 +9,9 @@ alias cc="say 'Command complete'"
 # Git
 alias gaac="g aa && g ci"
 alias gacm="g aa && g ci --amend"
-alias g="hub"
 alias	hb="hub browse"
 alias cor="git recent | hs | xargs git checkout"
+alias gr="git recent"
 alias grh="git reset --hard"
 alias so="source /Users/dylanandrews/.dotfiles/aliases"
 alias gpo="git pull origin \$(git branch --show-current)"
@@ -44,8 +44,12 @@ alias be='bundle exec'
 alias lst='tree'
 alias gn='cd ~/Dropbox/GoNoodle/gn-api\ copy/'
 
+# Stripe
+alias tj='cd ~/stripe/taxjar'
+alias ps='cd ~/stripe/pay-server'
+alias ex='cd ~/stripe/ex_smartcalcs'
+
 # Taxjar
-alias tj='cd ~/Documents/tj/taxjar'
 alias trs='cd ~/Documents/tj/tax-rate-service'
 alias bep='bundle exec pronto run -c origin/master --unstaged'
 alias sf='SKIP_FIXTURES=true'
@@ -76,6 +80,8 @@ alias ls32="lsof -ti tcp:3002 | xargs kill"
 alias ls31="lsof -ti tcp:3001 | xargs kill"
 alias ls30="lsof -ti tcp:3000 | xargs kill"
 alias lsall="lsof -ti tcp:3002 | xargs kill;lsof -ti tcp:3001 | xargs kill;lsof -ti tcp:3000 | xargs kill"
+alias tmj="tmuxinator start taxjar -p ~/.dotfiles/tmuxinator/taxjar.yml"
+
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
