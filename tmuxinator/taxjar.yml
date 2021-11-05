@@ -48,6 +48,7 @@ windows:
   - tj:
     - pay ssh
     - source bin/devbox_env
+    - lsof -ti tcp:3000 | xargs kill
     - bundle exec rails s
   - sidekiq:
     - pay ssh
@@ -56,6 +57,7 @@ windows:
   - exs:
     - cd ../ex_smartcalcs
     - pay ssh
+    - lsof -ti tcp:4001 | xargs kill
     - mix phx.server
   - payup:
     - cd ../pay-server
@@ -64,3 +66,5 @@ windows:
     - pay ssh
     - source bin/devbox_env
     - bundle exec rails c
+  - tj_local_db_acess:
+    - ssh -L 3333:localhost:5432 "$USER"@"$(pay show-host)"
