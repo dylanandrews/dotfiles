@@ -48,6 +48,12 @@ alias gn='cd ~/Dropbox/GoNoodle/gn-api\ copy/'
 alias tj='cd ~/stripe/taxjar'
 alias ps='cd ~/stripe/pay-server'
 alias ex='cd ~/stripe/ex_smartcalcs'
+alias tjj='pay ssh --force-tty "tmux -L taxjar attach -t taxjar"'
+alias tjd='pay ssh --force-tty "tmux -L taxjar attach -t devbox"'
+alias pay_tj='pay ssh --force-tty "cd /pay/src/taxjar; source ./bin/devbox_env; /bin/bash"'
+alias pay_eac='pay ssh --force-tty "cd /pay/src/engine-admin-console; source ./bin/devbox_env; /bin/bash"'
+alias pay_filing='pay ssh --force-tty "cd /pay/src/filing_api; source ./bin/devbox_env; /bin/bash"'
+alias pay_centauri='pay ssh --force-tty "cd /pay/src/centauri; source ./bin/devbox_env; /bin/bash"'
 
 # Taxjar
 alias trs='cd ~/Documents/tj/tax-rate-service'
