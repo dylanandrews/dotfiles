@@ -60,8 +60,6 @@ windows:
   - sidekiq:
     - cd /pay/src/taxjar
     - source bin/devbox_env
-    - pay ssh
-    - source bin/devbox_env
     - SIDEKIQ_CONCURRENCY=5 bundle exec sidekiq
   - exs:
     - cd /pay/src/ex_smartcalcs
