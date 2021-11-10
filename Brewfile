@@ -41,9 +41,6 @@ cask 'spotify'
 
 # Work
 brew 'awscli'
-brew 'cocoapods'
-brew 'imagemagick'
-brew 'mysql@5.6'
 brew 'redis'
 brew 'watchman'
 cask 'java8'
