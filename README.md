@@ -21,12 +21,6 @@
 4. Notes on brew files
   * `fzf` - need to run `/usr/local/opt/fzf/install` after installing
 
-5. Atom
-  * `apm install --packages-file .dotifles/packages.txt` to install packages
-
-6. `mysql`
-  * `gem install --install-dir ./vendor/ruby/2.6.0/ mysql2 -v '0.5.3' -- --with-ldflags=-L/usr/local/opt/openssl/lib --with-cppflags=-I/usr/local/opt/openssl/include --with-mysql-dir=$(brew --prefix mysql@5.6)` - this is a GN specific error
-
 7. `sudo vim ~/etc/hosts` file
 
 8. Add [relaxed theme](https://github.com/Relaxed-Theme/relaxed-terminal-themes#installation-1) to iterm2 by dowloading the colors and then importing them into iterm.
