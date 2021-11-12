@@ -57,9 +57,12 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+export PATH="/Users/dylanandrews/.rbenv/shims:$PATH"
+export PATH="/Users/dylanandrews/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 # asdf
 . $HOME/.asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-alias awsume=". awsume" 
+alias awsume=". awsume"
