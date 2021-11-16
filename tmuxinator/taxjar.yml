@@ -63,3 +63,10 @@ windows:
     - SIDEKIQ_CONCURRENCY=5 bundle exec sidekiq
   - exs:
     - cd /pay/src/ex_smartcalcs
+    - lsof -ti tcp:4001 | xargs kill
+    - mix phx.server
+  - filing_api:
+    - cd /pay/src/filing_api
+    - source bin/devbox_env
+    - lsof -ti tcp:3001 | xargs kill
+    - bundle exec rails s -p 3001
