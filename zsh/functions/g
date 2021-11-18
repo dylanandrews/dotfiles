@@ -1,0 +1,18 @@
+# show all local branches, along with how recently they have changed.
+run() {
+    # look at all branches, removing the * git prints next to the
+    # current branch.
+    for BR in `git branch | sed -e 's/\*//'`; do
+        # print the branch name
+        printf "%-50s" $BR
+        # print the date, time, and committer of the last commit
+        git log -n 1 --pretty=format:'%ci %ce' $BR | head -n 1
+        # print newline
+        echo ""
+    done
+}
+
+# get rid of local branches that were merged into master (takes a while!)
+cleanbr() {
+  git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done
+}
