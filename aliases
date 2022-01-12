@@ -42,9 +42,9 @@ alias nukedbf="FULL=1 bundle exec rake log:clear db:reset && bundle exec rake db
 alias gnfs="PORT=8082 yarn start:debug"
 alias be='bundle exec'
 alias lst='tree'
-alias gn='cd ~/Dropbox/GoNoodle/gn-api\ copy/'
 
 # Stripe
+alias ps='cd ~/stripe/pay-server'
 alias tj='cd ~/stripe/taxjar'
 alias ps='cd ~/stripe/pay-server'
 alias ex='cd ~/stripe/ex_smartcalcs'
