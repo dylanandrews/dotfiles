@@ -44,9 +44,9 @@ alias be='bundle exec'
 alias lst='tree'
 
 # Stripe
+alias pc='pay console'
 alias ps='cd ~/stripe/pay-server'
 alias tj='cd ~/stripe/taxjar'
-alias ps='cd ~/stripe/pay-server'
 alias ex='cd ~/stripe/ex_smartcalcs'
 alias ptja='pay ssh --force-tty "tmux a"'
 alias ptj='pay ssh --force-tty "cd /pay/src/taxjar; source ./bin/devbox_env; /bin/bash"'
