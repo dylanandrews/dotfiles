@@ -63,3 +63,6 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias awsume=". awsume"
 
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/bin/php:$PATH"
+source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
