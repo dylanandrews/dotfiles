@@ -62,6 +62,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias awsume=". awsume"
+eval "$(starship init zsh)"
 
 export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 export PATH="/opt/homebrew/opt/bin/php:$PATH"
