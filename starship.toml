@@ -1,11 +1,14 @@
 command_timeout = 2000
+
 [java]
-format = "[$symbol$version]($style) "
+detect_folders = ["java", "bazel-zoolander"]
 style = "bold green"
+format = "[$symbol$version]($style) "
 
 [python]
 format = "[$symbol$version]($style) "
 style = "bold green"
+disabled = true
 
 [ruby]
 format = "[$symbol$version]($style) "
@@ -17,7 +20,7 @@ format = ""
 truncation_length = 100
 truncate_to_repo = false
 style = "blue"
-format = "[:$path]($style)[$read_only]($read_only_style) "
+format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
 symbol = "🌱 "
@@ -32,3 +35,6 @@ modified = '*'
 [status]
 disabled = false
 format = '[\[$status - $common_meaning\]](green)'
+
+[character]
+error_symbol = " (bold red)"
