@@ -31,6 +31,3 @@ format = '[$symbol$branch]($style) '
 untracked = ""
 format = '([\[$conflicted$deleted$renamed$modified$staged$behind\]]($style) )'
 modified = '*'
-
-[character]
-error_symbol = " (bold red)"
