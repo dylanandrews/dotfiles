@@ -67,6 +67,8 @@ eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias awsume=". awsume"
+
+# Show current directory in iterm tab
 if [ $ITERM_SESSION_ID ]; then
 precmd() {
   echo -ne "\033]0;${PWD##*/}\007"

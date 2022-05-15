@@ -67,3 +67,10 @@ eval "$(starship init zsh)"
 export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 export PATH="/opt/homebrew/opt/bin/php:$PATH"
 source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Show current directory in iterm tab
+if [ $ITERM_SESSION_ID ]; then
+precmd() {
+  echo -ne "\033]0;${PWD##*/}\007"
+}
+fi
