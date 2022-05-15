@@ -60,6 +60,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PATH="/Users/dylanandrews/.rbenv/shims:$PATH"
 export PATH="/Users/dylanandrews/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+eval "$(starship init zsh)"
 
 # asdf
 . $HOME/.asdf/asdf.sh

@@ -1,0 +1,34 @@
+command_timeout = 2000
+[java]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[python]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[ruby]
+format = "[$symbol$version]($style) "
+
+[nodejs]
+format = ""
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+style = "blue"
+format = "[:$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = "🌱 "
+format = '[$symbol$branch]($style) '
+
+[git_status]
+# I don't care about untracked files or that there's a stash present.
+untracked = ""
+format = '([\[$conflicted$deleted$renamed$modified$staged$behind\]]($style) )'
+modified = '*'
+
+[status]
+disabled = false
+format = '[\[$status - $common_meaning\]](green)'
