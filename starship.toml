@@ -12,6 +12,7 @@ disabled = true
 
 [ruby]
 format = "[$symbol$version]($style) "
+style = "bold green"
 
 [nodejs]
 format = ""
@@ -26,7 +27,6 @@ symbol = "🌱 "
 format = '[$symbol$branch]($style) '
 
 [git_status]
-# I don't care about untracked files or that there's a stash present.
 untracked = ""
-format = '([\[$conflicted$deleted$renamed$modified$staged$behind\]]($style) )'
-modified = '*'
+stashed = ""
+conflicted = "🏳"

@@ -25,3 +25,5 @@ alias tc='/usr/local/stripe/bin/test_cookbook'
 alias cz='/usr/local/stripe/bin/chef-zero'
 alias cookit='tc && cz'
 # STOP - Managed by chef cookbook stripe_cpe_bin
+
+export GH_HOST=git.corp.stripe.com
