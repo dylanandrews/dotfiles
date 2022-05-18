@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/zshrc.pre.zsh"
 # ssh dylanandrews@dylanandrewsmbp.attlocal.net
 autoload -Uz compinit; compinit
 autoload -Uz bashcompinit; bashcompinit
@@ -67,3 +69,12 @@ eval "$(starship init zsh)"
 export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 export PATH="/opt/homebrew/opt/bin/php:$PATH"
 source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+if [ $ITERM_SESSION_ID ]; then
+precmd() {
+  echo -ne "\033]0;${PWD##*/}\007"
+}
+fi
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/zshrc.post.zsh"
