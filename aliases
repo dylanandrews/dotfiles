@@ -102,6 +102,12 @@ alias tmj="tmuxinator start taxjar -p ~/.dotfiles/tmuxinator/taxjar.yml"
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
+# Allows searching history and updating in your editor
+function rr() {
+  hist=$(history | sort -rn | fzf +m --height 40% | awk '{ print $1 }')
+  fc $hist
+}
+
 function resetdb {
   bundle exec rails db:environment:set RAILS_ENV=development
   if [[ $1 == '-f' ]] || [[ $1 == '--full' ]]; then
