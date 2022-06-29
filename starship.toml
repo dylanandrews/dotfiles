@@ -1,5 +1,8 @@
 command_timeout = 8000
 
+[battery]
+disabled = true
+
 [java]
 detect_folders = ["java", "bazel-zoolander"]
 style = "bold green"
