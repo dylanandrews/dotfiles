@@ -25,7 +25,23 @@
 
 8. Add [relaxed theme](https://github.com/Relaxed-Theme/relaxed-terminal-themes#installation-1) to iterm2 by dowloading the colors and then importing them into iterm.
 
+4. Notes on starship prompt
+  * `starship.toml` is in the `~/.config` directory.
+  * You need to run `ln -s /Users/dylanandrews/.dotfiles/starship.toml starship.toml` to get starhip to use your custom `.toml` file.
+
+5. Notes on zsh-syntax-highlighting
+  * You should clone it into home folder (`~`). The command to install is. You run this in the home folder and it will update the zshrc file.
+  ```
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+  echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+  ```
+
+6. Run install shell prompt from VS code command pallette to allow `code .` command in the terminal.
+
+7. Copy `.zhistory` file from old computer into the new one.
 ## Mac Settings
+
+8. VS Code Settings are synced through signing into the app via github.
 
 1. Finder > View > Show Path
 
