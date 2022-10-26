@@ -50,9 +50,6 @@ _load_settings "$HOME/.zsh/configs"
 # Aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
-# Syntax highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Make autocomplete case insensitive
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -66,9 +63,5 @@ eval "$(starship init zsh)"
 . $HOME/.asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-alias awsume=". awsume"
-if [ $ITERM_SESSION_ID ]; then
-precmd() {
-  echo -ne "\033]0;${PWD##*/}\007"
-}
-fi
+
+source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
