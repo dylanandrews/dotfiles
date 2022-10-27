@@ -64,4 +64,11 @@ eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Show path in iterm tab
+if [ $ITERM_SESSION_ID ]; then
+precmd() {
+  echo -ne "\033]0;${PWD##*/}\007"
+}
+fi
+
 source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
