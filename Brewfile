@@ -9,7 +9,9 @@ brew 'bat'
 brew 'diff-so-fancy'
 # For recent git command with cor alias
 brew 'heatseeker'
-brew 'hub'
+brew 'gh'
+# needed for cor command - heatseeker not allowed at work
+brew 'selecta'
 # Pretty printing json
 brew 'jsonpp'
 brew 'jump'
