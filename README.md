@@ -42,6 +42,8 @@
 9. Run install shell prompt from VS code command pallette to allow `code .` command in the terminal.
 
 10. Copy `.zhistory` file from old computer into the new one.
+
+11. Change color of file tree by going to Appearance & Behavior > File Colors > Click + button and add Project Files > Select Custom Color (333A4E)
 ## Mac Settings
 
 8. VS Code Settings are synced through signing into the app via github.
