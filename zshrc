@@ -82,12 +82,12 @@ autoload -U promptinit; promptinit
 PURE_CMD_MAX_EXEC_TIME=10
 
 # # change the path color
-zstyle :prompt:pure:path color magenta
+zstyle :prompt:pure:path color 205
 
 # change the color for both `prompt:success` and `prompt:error`
 zstyle ':prompt:pure:prompt:*' color cyan
 
-zstyle :prompt:pure:git:branch color blue
+zstyle :prompt:pure:git:branch color 069
 
 prompt pure
 # end of pure prompt info
