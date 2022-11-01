@@ -44,6 +44,7 @@ alias be='bundle exec'
 alias lst='tree'
 
 # Stripe
+alias cf='clearFilings'
 alias pc='pay console'
 alias ps='cd ~/stripe/pay-server'
 alias zo='cd ~/stripe/zoolander'
@@ -147,4 +148,14 @@ function rtdb {
   psql tj_test_receipt_item_taxes_shard1 < ./db/rits_shards_structure.sql
   RAILS_ENV=test bundle exec rake db:migrate
   echo "DONE!"
+}
+
+# Remove filings from mongo db in stripe
+function clearFilings() {
+  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"h_stripetax_filingsdb\"\).TaxFiling.remove\({}\)'
+}
+
+function kill_port() {
+  PORT_NUMBER=$1
+  lsof -i tcp:${PORT_NUMBER} | awk 'NR!=1 {print $2}' | xargs kill -9
 }
