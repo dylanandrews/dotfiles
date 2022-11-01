@@ -83,3 +83,5 @@
   insteadOf = https://git.heroku.com/
 [pull]
 	ff = only
+[work "features"]
+	gh = true

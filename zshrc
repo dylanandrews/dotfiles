@@ -57,7 +57,9 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PATH="/Users/dylanandrews/.rbenv/shims:$PATH"
 export PATH="/Users/dylanandrews/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-eval "$(starship init zsh)"
+
+# Starship prompt
+# eval "$(starship init zsh)"
 
 # asdf
 . $HOME/.asdf/asdf.sh
@@ -71,4 +73,26 @@ precmd() {
 }
 fi
 
+# Pure prompt
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+
+autoload -U promptinit; promptinit
+
+# optionally define some options
+PURE_CMD_MAX_EXEC_TIME=10
+
+# # change the path color
+zstyle :prompt:pure:path color magenta
+
+# change the color for both `prompt:success` and `prompt:error`
+zstyle ':prompt:pure:prompt:*' color cyan
+
+zstyle :prompt:pure:git:branch color blue
+
+prompt pure
+# end of pure prompt info
+
 source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# export PATH="$PATH:$HOME/stripe/work/exe"
+# source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
