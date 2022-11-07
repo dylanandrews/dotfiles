@@ -88,6 +88,7 @@ zstyle :prompt:pure:path color 205
 zstyle ':prompt:pure:prompt:*' color cyan
 
 zstyle :prompt:pure:git:branch color 069
+zstyle :prompt:pure:git:branch:cached color 069
 
 prompt pure
 # end of pure prompt info
