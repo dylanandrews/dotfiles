@@ -7,9 +7,9 @@ alias v="$VISUAL"
 alias cc="say 'Command complete'"
 
 # Git
+alias g="git"
 alias gaac="g aa && g ci"
 alias gacm="g aa && g ci --amend"
-alias	hb="hub browse"
 alias cor="git recent | selecta | xargs git checkout"
 alias gr="git recent"
 alias grh="git reset --hard"
@@ -17,6 +17,11 @@ alias so="source /Users/dylanandrews/.dotfiles/aliases"
 alias gpo="git pull origin \$(git branch --show-current)"
 alias gs="git stash"
 alias gsp="git stash pop"
+alias gp="git prune"
+alias gstu="git status -uno"
+alias gst="git status"
+alias gpf="git push --force"
+alias gpu="git push"
 
 # Node
 alias ygls="yarn global list"
@@ -87,7 +92,6 @@ alias h='cd ~'
 alias dot='cd ~/.dotfiles'
 alias pos='git pull origin staging'
 alias cos='git checkout staging'
-alias prm='hub pull-request -m  '
 alias rc='bundle exec rails console'
 alias rdm='bundle exec rake db:migrate'
 alias rdr='bundle exec rake db:rollback'
