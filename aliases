@@ -163,3 +163,11 @@ function kill_port() {
   PORT_NUMBER=$1
   lsof -i tcp:${PORT_NUMBER} | awk 'NR!=1 {print $2}' | xargs kill -9
 }
+
+function schemaUpdate() {
+  pay schemas:update --repo zoolander --path $@
+}
+
+function schemaSearch() {
+  pay schemas:search --repo zoolander --path $@
+}
