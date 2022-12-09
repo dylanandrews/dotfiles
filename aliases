@@ -171,3 +171,7 @@ function schemaUpdate() {
 function schemaSearch() {
   pay schemas:search --repo zoolander --path $@
 }
+
+function cob() {
+  git checkout -b $USER/$1
+}
