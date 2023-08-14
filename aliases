@@ -22,6 +22,8 @@ alias gstu="git status -uno"
 alias gst="git status"
 alias gpf="git push --force"
 alias gpu="git push"
+alias gpmr="git pull origin master --rebase"
+alias gprc="gh pr create"
 
 # Node
 alias ygls="yarn global list"
@@ -49,8 +51,9 @@ alias be='bundle exec'
 alias lst='tree'
 
 # Stripe
-alias cf='clearFilings'
+alias cr='clearReports'
 alias pc='pay console'
+alias ci='watch -c pay ci:status'
 alias ps='cd ~/stripe/pay-server'
 alias zo='cd ~/stripe/zoolander'
 alias tj='cd ~/stripe/taxjar'

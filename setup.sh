@@ -8,6 +8,16 @@ if [ ! -e $ASDF ]; then
   git clone https://github.com/asdf-vm/asdf.git $ASDF --branch v0.6.3
 fi
 
+echo "💻 Installing zsh-autosuggestions..."
+if [ ! -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
+  mkdir -p ~/.oh-my-zsh/custom/plugins
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+  echo "✅ Successfully installed zsh-autosuggestions."
+else
+  echo "✅ zsh-autosuggestions is already installed. Skipping step."
+fi
+
 # Install Homebrew packages
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew bundle --file=${DOTFILES}/Brewfile

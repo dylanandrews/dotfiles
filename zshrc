@@ -94,6 +94,7 @@ prompt pure
 # end of pure prompt info
 
 source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # export PATH="$PATH:$HOME/stripe/work/exe"
 # source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
