@@ -148,6 +148,27 @@
                               "type": "basic"
                           }
                       ]
+                  },
+                  {
+                      "description": "Use LEFT OPTION + s to search copied word in Dictionary.app",
+                      "manipulators": [
+                          {
+                              "from": {
+                                  "key_code": "s",
+                                  "modifiers": {
+                                      "mandatory": [
+                                          "left_option"
+                                      ]
+                                  }
+                              },
+                              "to": [
+                                  {
+                                      "shell_command": "open \"dict://`pbpaste`\""
+                                  }
+                              ],
+                              "type": "basic"
+                          }
+                      ]
                   }
               ]
           },
@@ -208,11 +229,31 @@
                   "simple_modifications": [
                       {
                           "from": {
+                              "key_code": "end"
+                          },
+                          "to": [
+                              {
+                                  "consumer_key_code": "mute"
+                              }
+                          ]
+                      },
+                      {
+                          "from": {
                               "key_code": "escape"
                           },
                           "to": [
                               {
                                   "key_code": "grave_accent_and_tilde"
+                              }
+                          ]
+                      },
+                      {
+                          "from": {
+                              "key_code": "page_down"
+                          },
+                          "to": [
+                              {
+                                  "consumer_key_code": "volume_decrement"
                               }
                           ]
                       },
@@ -228,11 +269,11 @@
                       },
                       {
                           "from": {
-                              "key_code": "page_down"
+                              "key_code": "delete_forward"
                           },
                           "to": [
                               {
-                                  "consumer_key_code": "volume_decrement"
+                                  "consumer_key_code": "play_or_pause"
                               }
                           ]
                       }
@@ -248,7 +289,7 @@
                       "product_id": 591,
                       "vendor_id": 1452
                   },
-                  "ignore": true,
+                  "ignore": false,
                   "manipulate_caps_lock_led": true,
                   "simple_modifications": [],
                   "treat_as_built_in_keyboard": false
