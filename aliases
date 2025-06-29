@@ -36,63 +36,11 @@ alias ngls="npm list -g --depth 0"
 # EZA
 alias ls="eza"
 
-# GoNoodle API
-alias b="bundle"
-alias be="bundle exec"
-alias rdr="bundle exec rake db:rollback"
-alias rdr="bundle exec rake db:migrate"
-alias bi="bundle install"
-alias bp="bundle package"
-alias mi="bundle exec rake db:migrate"
-alias nukedb="bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall"
-alias nukedbf="FULL=1 bundle exec rake log:clear db:reset && bundle exec rake db:test:prepare && redis-cli flushall"
-alias gnfs="PORT=8082 yarn start:debug"
-alias be='bundle exec'
-alias lst='tree'
-
-# Stripe
-alias cr='clearReports'
-alias pc='pay console'
-alias ci='watch -c pay ci:status'
-alias ps='cd ~/stripe/pay-server'
-alias et='cd ~/stripe/remittance-easy-test'
-alias zo='cd ~/stripe/zoolander'
-alias tj='cd ~/stripe/taxjar'
-alias ex='cd ~/stripe/ex_smartcalcs'
-alias ptja='pay ssh --force-tty "tmux a"'
-alias ptj='pay ssh --force-tty "cd /pay/src/taxjar; source ./bin/devbox_env; /bin/bash"'
-alias peac='pay ssh --force-tty "cd /pay/src/engine-admin-console; source ./bin/devbox_env; /bin/bash"'
-alias pfiling='pay ssh --force-tty "cd /pay/src/filing_api; source ./bin/devbox_env; /bin/bash"'
-alias pcent='pay ssh --force-tty "cd /pay/src/centauri; source ./bin/devbox_env; /bin/bash"'
-alias ldb='ssh -L 3333:localhost:5432 "$USER"@"$(pay show-host)"'
-alias kubectl-tj="sc aws-sh kubectl-tj"
-alias dev="sc-env taxjardev.stripe.net -r <your-role-here> && kubectx dev"
-alias staging="sc-env taxjarstaging.stripe.net -r <your-role-here> && kubectx staging"
-alias prod="sc-env taxjar.stripe.net -r prod-engineers-readonly && kubectx prod"
-alias build="sc-env taxjarbuild.stripe.net -r <your-role-here> && kubectx build"
-alias docker-login="sc-env taxjarbuild.stripe.net -r <your-role-here> && sc aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 708017133719.dkr.ecr.us-east-1.amazonaws.com"
-alias kubectl-tj="sc aws-sh kubectl-tj"
-alias chamber="sc aws-sh chamber"
-alias hatch="sc aws-sh hatch"
-
-# reset gondrian
-function rsg {
-  sed -i '' 's/-dev=true/-dev=false/g' scripts/dev/gondrian
-  pay restart gondrian
-  sleep 15
-  git checkout scripts/dev/gondrian
-}
-
-# Taxjar
-alias trs='cd ~/Documents/tj/tax-rate-service'
-alias bep='bundle exec pronto run -c origin/master --unstaged'
-alias sf='SKIP_FIXTURES=true'
-alias js='JS_SPECS=true'
-
 alias atom='open -a Atom'
 alias g='git'
 alias h='cd ~'
 alias dot='cd ~/.dotfiles'
+alias btu='cd ~/Documents/betterup_repos/betterup-monolith'
 alias pos='git pull origin staging'
 alias cos='git checkout staging'
 alias rc='bundle exec rails console'
@@ -157,28 +105,6 @@ function rtdb {
   echo "DONE!"
 }
 
-# Remove filings from mongo db in stripe
-function clearFilingsUnsharded() {
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"h_stripetax_filingsdb\"\).TaxFiling.remove\({}\)'
-}
-
-function clearFilings() {
-  current_dir=$(pwd)
-  cd ~/stripe/pay-server
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0010\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0020\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0040\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0050\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0060\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0080\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0090\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0100\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0110\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0120\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0130\"\).TaxReport.remove\({}\)'
-  pay ssh --force-tty mongo --verbose --eval 'db.getSiblingDB\(\"v2db_d_h_stripetax_reportsdb_sharded_x2jhdb_0160\"\).TaxReport.remove\({}\)'
-  cd $current_dir
-}
 
 function kill_port() {
   PORT_NUMBER=$1
