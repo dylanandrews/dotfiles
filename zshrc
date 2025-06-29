@@ -1,15 +1,15 @@
 # ssh dylanandrews@dylanandrewsmbp.attlocal.net
 autoload -Uz compinit; compinit
 autoload -Uz bashcompinit; bashcompinit
-source ~/.bash_profile
-source ~/.bashrc
-eval "$(nodenv init -)"
+# source ~/.bash_profile
+# source ~/.bashrc
+# eval "$(nodenv init -)"
 compdef _git stripe-git=git # this line specifically will fix git autocompletion
 
 # Load custom executable functions
-for function in ~/.zsh/functions/*; do
-  source $function
-done
+# for function in ~/.zsh/functions/*; do
+#   source $function
+# done
 
 # extra files in ~/.zsh/configs/pre , ~/.zsh/configs , and ~/.zsh/configs/post
 # these are loaded first, second, and third, respectively.
@@ -54,15 +54,18 @@ _load_settings "$HOME/.zsh/configs"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-export PATH="/Users/dylanandrews/.rbenv/shims:$PATH"
-export PATH="/Users/dylanandrews/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# add pip to path
+export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
+
+# export PATH="/Users/dylanandrews/.rbenv/shims:$PATH"
+# export PATH="/Users/dylanandrews/.rbenv/bin:$PATH"
+# eval "$(rbenv init -)"
 
 # Starship prompt
 # eval "$(starship init zsh)"
 
 # asdf
-. $HOME/.asdf/asdf.sh
+# . $HOME/.asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -93,8 +96,17 @@ zstyle :prompt:pure:git:branch:cached color 069
 prompt pure
 # end of pure prompt info
 
-source /Users/dylanandrews/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# export PATH="$PATH:$HOME/stripe/work/exe"
-# source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+. "$HOME/.local/bin/env"
+
+# For python for AI course
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"

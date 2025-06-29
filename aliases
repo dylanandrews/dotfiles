@@ -33,8 +33,8 @@ alias yr="yarn run"
 alias ys="yarn start"
 alias ngls="npm list -g --depth 0"
 
-# EXA
-alias ls="exa"
+# EZA
+alias ls="eza"
 
 # GoNoodle API
 alias b="bundle"
