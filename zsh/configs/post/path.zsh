@@ -1,8 +1,6 @@
 # ensure dotfiles bin directory is loaded first
 PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 
-# PATH=/usr/local/bin:$PATH
-PATH=/usr/local/opt/ruby/bin:$PATH
 
 # mkdir .git/safe in the root of repositories you trust
 PATH=".git/safe/../../bin:$PATH"

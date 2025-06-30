@@ -1,15 +1,6 @@
-# ssh dylanandrews@dylanandrewsmbp.attlocal.net
 autoload -Uz compinit; compinit
 autoload -Uz bashcompinit; bashcompinit
-# source ~/.bash_profile
-# source ~/.bashrc
-# eval "$(nodenv init -)"
 compdef _git stripe-git=git # this line specifically will fix git autocompletion
-
-# Load custom executable functions
-# for function in ~/.zsh/functions/*; do
-#   source $function
-# done
 
 # extra files in ~/.zsh/configs/pre , ~/.zsh/configs , and ~/.zsh/configs/post
 # these are loaded first, second, and third, respectively.
@@ -57,15 +48,6 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # add pip to path
 export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
 
-# export PATH="/Users/dylanandrews/.rbenv/shims:$PATH"
-# export PATH="/Users/dylanandrews/.rbenv/bin:$PATH"
-# eval "$(rbenv init -)"
-
-# Starship prompt
-# eval "$(starship init zsh)"
-
-# asdf
-# . $HOME/.asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
