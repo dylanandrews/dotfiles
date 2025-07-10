@@ -2,10 +2,6 @@
 ._*
 *~
 
-# Project files
-*.sublime-project
-*.sublime-workspace
-
 # Build files
 node_modules
 dist
@@ -21,3 +17,6 @@ bower_components
 .Trashes
 .Spotlight-V100
 /zhistory_dotfiles
+
+# token file
+init.sh

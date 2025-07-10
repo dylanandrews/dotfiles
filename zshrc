@@ -87,6 +87,8 @@ export NVM_DIR="$HOME/.nvm"
 
 . "$HOME/.local/bin/env"
 
+[[ -s "$HOME/.dotfiles/init.sh" ]] && source "$HOME/.dotfiles/init.sh"
+
 # For python for AI course
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
