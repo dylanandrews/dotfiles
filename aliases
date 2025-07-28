@@ -6,6 +6,9 @@ alias e="$EDITOR"
 alias v="$VISUAL"
 alias cc="say 'Command complete'"
 
+# Claude
+alias cr="claude --resume"
+
 # Git
 alias g="git"
 alias gaac="g aa && g ci"
