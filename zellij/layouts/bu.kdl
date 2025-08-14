@@ -1,0 +1,60 @@
+// Enhanced Zellij layout for BetterUp Rails development
+// Based on tmuxinator bu.yml configuration with improvements
+// Usage: zellij --layout bu (from repo root)
+
+layout {
+    // Set default working directory to current directory when launched
+    cwd "/Users/dylanandrews/Documents/betterup_repos/betterup-monolith"
+    
+    // Main Rails server tab with split view
+    tab name="rails-server" focus=true {
+        pane size=1 borderless=true {
+            name "Rails Server Logs"
+            command "bin/dc"
+            args "logs" "--tail=10" "--follow" "web"
+        }
+    }
+    
+    // Dedicated Rails console tab - matches your tmuxinator setup
+    tab name="rails-console" {
+        pane size=1 borderless=true {
+            name "Rails Console"
+            command "bin/rails"
+            args "console"
+        }
+    }
+    
+    // Sidekiq worker monitoring
+    tab name="sidekiq-worker" {
+        pane size=1 borderless=true {
+            name "Sidekiq Worker Logs"
+            command "bin/dc"
+            args "logs" "--tail=10" "--follow" "worker"
+        }
+    }
+    
+    // Enhanced dev commands tab with multiple panes
+    tab name="dev-commands" {
+        pane size="60%" {
+            name "Main Terminal"
+            // Primary development terminal - ready for bin/ commands, git, etc.
+        }
+        pane size="40%" split_direction="horizontal" {
+            name "Quick Commands"
+            // Secondary pane for quick commands, testing, etc.
+        }
+    }
+    
+    // Additional monitoring tab for logs and system status
+    tab name="monitoring" {
+        pane size="50%" {
+            name "All Services"
+            command "bin/dc"
+            args "logs" "--tail=5" "--follow"
+        }
+        pane size="50%" split_direction="horizontal" {
+            name "System Monitor"
+            // Available for htop, docker stats, etc.
+        }
+    }
+}

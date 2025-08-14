@@ -1,0 +1,48 @@
+// Enhanced Zellij layout for BetterUp Rails development
+// All-in-one tab with Rails console, Docker, and monitoring panes
+// Usage: zellij --layout bu-enhanced (from repo root)
+
+layout {
+    cwd "/Users/dylanandrews/Documents/betterup_repos/betterup-monolith"
+    
+    // Single comprehensive development tab
+    tab name="development" focus=true {
+        pane split_direction="vertical" {
+            // Left side: Split between main terminal and Rails console
+            pane size="60%" split_direction="horizontal" {
+                pane size="60%" {
+                    name "Development Commands"
+                    // Primary development terminal - git, bin/ commands, etc.
+                }
+                pane size="40%" {
+                    name "Rails Console"
+                    command "bin/rails"
+                    args "console"
+                }
+            }
+            // Right side: Stacked monitoring panes
+            pane size="40%" stacked=true {
+                pane {
+                    name "Rails Server"
+                    command "bin/dc"
+                    args "logs" "--tail=10" "--follow" "web"
+                }
+                pane {
+                    name "Sidekiq Worker" 
+                    command "bin/dc"
+                    args "logs" "--tail=10" "--follow" "worker"
+                }
+                pane {
+                    name "Database Logs"
+                    command "bin/dc"
+                    args "logs" "--tail=10" "--follow" "db"
+                }
+                pane {
+                    name "Docker Status"
+                    command "watch"
+                    args "-n" "2" "bin/dc ps"
+                }
+            }
+        }
+    }
+}

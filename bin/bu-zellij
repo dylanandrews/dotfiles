@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+# Helper script for launching Zellij with BetterUp layouts
+# Usage: bu-zellij [layout-name]
+# Layouts: bu (basic), bu-enhanced (with floating panes and stacks)
+
+set -e
+
+cd "/Users/dylanandrews/Documents/betterup_repos/betterup-monolith"
+
+if [ -z "$1" ]; then
+    echo "Available layouts:"
+    echo "  bu          - Basic layout matching tmuxinator setup"
+    echo "  bu-enhanced - Enhanced layout with floating panes and stacks"
+    echo ""
+    echo "Usage: bu-zellij [layout-name]"
+    echo "Example: bu-zellij bu-enhanced"
+    exit 0
+fi
+
+LAYOUT_NAME="$1"
+LAYOUT_FILE="$HOME/.config/zellij/layouts/${LAYOUT_NAME}.kdl"
+
+if [ ! -f "$LAYOUT_FILE" ]; then
+    echo "Error: Layout '$LAYOUT_NAME' not found at $LAYOUT_FILE"
+    echo "Available layouts:"
+    ls -1 ~/.config/zellij/layouts/ | sed 's/\.kdl$//'
+    exit 1
+fi
+
+echo "Launching Zellij with layout: $LAYOUT_NAME"
+exec zellij --layout "$LAYOUT_NAME"
