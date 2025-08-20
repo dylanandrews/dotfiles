@@ -100,3 +100,4 @@ eval "$(pyenv init -)"
 
 eval "$(mise activate zsh)"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"

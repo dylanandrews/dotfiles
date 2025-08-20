@@ -9,6 +9,9 @@ alias cc="say 'Command complete'"
 # Claude
 alias cr="claude --resume"
 
+# Cursor
+alias cs="cursor ."
+
 # Git
 alias g="git"
 alias gaac="g aa && g ci"
