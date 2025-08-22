@@ -128,3 +128,32 @@ function schemaSearch() {
 function cob() {
   git checkout -b $USER/$1
 }
+
+# BetterUp Docker - Local Development Commands
+alias busetup="bin/setup" # Installs dependencies, sets up database, starts Docker containers
+alias busetup-clean="bin/setup --clean" # Cleans volumes and resets environment (slower but fixes issues)
+alias busetup-clean-all="bin/setup --clean-all" # Removes Docker images; most destructive full reset
+alias burestart="bin/restart" # Restarts the Dockerized environment
+alias bustop="bin/stop" # Stops all running containers
+alias budc-ps="docker-compose ps" # Lists running containers and their ports
+alias budc-logs="docker-compose logs" # Tails logs for a specific service (usage: budc-logs <service_name>)
+alias budc-build="docker-compose build" # Rebuilds a specific service container (usage: budc-build <service_name>)
+alias budocker-prune="docker system prune -a && docker volume prune --filter all=true" # Removes all unused Docker data (DESTRUCTIVE)
+
+# BetterUp Database - Migrations, Seeds, and Access
+alias budb-migrate="bin/rails db:migrate" # Runs pending migrations
+alias budb-migrate-status="bin/rails db:migrate:status" # Shows migration status (up/down)
+alias budb-generate-migration="bin/rails generate migration" # Generates a new migration (usage: budb-generate-migration <Name>)
+alias buresetdb="bin/resetdb" # Drops and recreates database, runs all migrations, seeds data
+alias budb-seed="bin/rails db:seed" # Seeds the database with initial data
+
+# BetterUp Testing - Rails/RSpec
+alias burspec="bin/rspec" # Runs the full test suite
+alias burspec-file="bin/rspec" # Runs a specific test file (usage: burspec-file spec/path/to/file_spec.rb)
+alias butest-db-reset="RAILS_ENV=test bin/rails db:reset" # Resets the test database
+alias burails-test="bin/rails test" # Runs Rails tests (if not using RSpec)
+
+# BetterUp Other Useful Commands
+alias bufactory-create="rails runner 'FactoryBot.create" # Create test data directly (usage: bufactory-create(:model, ...)')
+alias bubootstrap="bu bootstrap developer" # Bootstraps your developer environment
+alias bua="grep '^alias bu' ~/.dotfiles/aliases" # Shows all BetterUp aliases
