@@ -8,6 +8,7 @@ alias cc="say 'Command complete'"
 
 # Claude
 alias cr="claude --resume"
+alias ch="cd ~/.claude"
 
 # Cursor
 alias cs="cursor ."
