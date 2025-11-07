@@ -100,4 +100,9 @@ eval "$(pyenv init -)"
 
 eval "$(mise activate zsh)"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+# export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
+
+export BUNDLE_RUBYGEMS__PKG__GITHUB_COM="$NODE_AUTH_TOKEN"
+
+# Add libpq bin to PATH (for Ruby LSP PostgreSQL gem compilation)
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

@@ -15,7 +15,7 @@ PATH="$NPM_PACKAGES/bin:$PATH"
 # Ruby Gems
 GEM_HOME="$HOME/.gem"
 export PATH="$GEM_HOME/bin:$PATH"
-export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/ # mysql2 missing library fix
+export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl@3/lib/ # mysql2 missing library fix
 
 # AWS CLI
 export PATH=~/bin:$PATH
