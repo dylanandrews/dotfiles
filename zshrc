@@ -48,9 +48,6 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # add pip to path
 export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Show path in iterm tab
 if [ $ITERM_SESSION_ID ]; then
 precmd() {

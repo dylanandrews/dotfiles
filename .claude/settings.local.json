@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/Users/dylanandrews/**)",
+      "Bash(tree:*)",
+      "Bash(test:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
