@@ -95,6 +95,13 @@ if [ -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-auto
     git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
 fi
 
+# Set zsh as default shell in Codespaces
+if [ -n "$CODESPACES" ] && command -v zsh &> /dev/null; then
+    echo ""
+    echo "🐚 Setting zsh as default shell..."
+    sudo chsh -s "$(which zsh)" "$(whoami)" 2>/dev/null || true
+fi
+
 echo ""
 echo "✅ Dotfiles installed successfully!"
 echo ""
