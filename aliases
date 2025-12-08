@@ -20,7 +20,7 @@ alias gacm="g aa && g ci --amend"
 alias cor="git recent | selecta | xargs git checkout"
 alias gr="git recent"
 alias grh="git reset --hard"
-alias so="source /Users/dylanandrews/.dotfiles/aliases"
+alias so="source ~/.aliases"
 alias gpo="git pull origin \$(git branch --show-current)"
 alias gs="git stash"
 alias gsp="git stash pop"
@@ -40,8 +40,10 @@ alias yr="yarn run"
 alias ys="yarn start"
 alias ngls="npm list -g --depth 0"
 
-# EZA
-alias ls="eza"
+# EZA (use eza if available, otherwise standard ls)
+if command -v eza &> /dev/null; then
+    alias ls="eza"
+fi
 
 alias atom='open -a Atom'
 alias g='git'

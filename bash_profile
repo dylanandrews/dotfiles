@@ -16,7 +16,8 @@ export LANG="en_US"
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
-source ~/.rbenvrc
+# Source rbenvrc if it exists (not present in Codespaces)
+[ -f ~/.rbenvrc ] && source ~/.rbenvrc
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
