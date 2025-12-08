@@ -87,19 +87,52 @@ fi
 # Ensure starship config directory exists
 mkdir -p "$HOME/.config"
 
-# Install zsh-autosuggestions if not present (and if oh-my-zsh is installed)
-if [ -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
+# Codespaces-specific setup: install tools to match local Mac environment
+if [ -n "$CODESPACES" ]; then
     echo ""
-    echo "💻 Installing zsh-autosuggestions..."
-    mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
-    git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
-fi
+    echo "🖥️  Codespaces detected - installing additional tools..."
 
-# Set zsh as default shell in Codespaces
-if [ -n "$CODESPACES" ] && command -v zsh &> /dev/null; then
-    echo ""
-    echo "🐚 Setting zsh as default shell..."
-    sudo chsh -s "$(which zsh)" "$(whoami)" 2>/dev/null || true
+    # Set zsh as default shell
+    if command -v zsh &> /dev/null; then
+        echo "🐚 Setting zsh as default shell..."
+        sudo chsh -s "$(which zsh)" "$(whoami)" 2>/dev/null || true
+    fi
+
+    # Install Pure prompt via npm
+    if ! command -v prompt &> /dev/null; then
+        echo "💜 Installing Pure prompt..."
+        npm install --global pure-prompt 2>/dev/null || true
+    fi
+
+    # Install eza (modern ls replacement)
+    if ! command -v eza &> /dev/null; then
+        echo "📂 Installing eza..."
+        sudo apt-get update -qq && sudo apt-get install -y -qq eza 2>/dev/null || true
+    fi
+
+    # Create oh-my-zsh custom plugins directory
+    mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
+
+    # Install zsh-autosuggestions
+    if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
+        echo "💡 Installing zsh-autosuggestions..."
+        git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
+    fi
+
+    # Install zsh-syntax-highlighting
+    if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
+        echo "🎨 Installing zsh-syntax-highlighting..."
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" 2>/dev/null || true
+    fi
+
+else
+    # Non-Codespaces: only install zsh plugins if oh-my-zsh exists
+    if [ -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
+        echo ""
+        echo "💻 Installing zsh-autosuggestions..."
+        mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
+        git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
+    fi
 fi
 
 echo ""

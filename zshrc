@@ -55,9 +55,8 @@ precmd() {
 }
 fi
 
-# Pure prompt (only on macOS with Homebrew)
-if command -v brew &> /dev/null; then
-    fpath+=("$(brew --prefix)/share/zsh/site-functions")
+# Pure prompt setup
+_setup_pure_prompt() {
     autoload -U promptinit; promptinit
 
     # optionally define some options
@@ -73,6 +72,21 @@ if command -v brew &> /dev/null; then
     zstyle :prompt:pure:git:branch:cached color 069
 
     prompt pure
+}
+
+# Try Homebrew first (macOS), then npm global (Codespaces/Linux)
+if command -v brew &> /dev/null; then
+    fpath+=("$(brew --prefix)/share/zsh/site-functions")
+    _setup_pure_prompt
+elif [[ -d "$HOME/.npm-global/lib/node_modules/pure-prompt/functions" ]]; then
+    fpath+=("$HOME/.npm-global/lib/node_modules/pure-prompt/functions")
+    _setup_pure_prompt
+elif [[ -d "/usr/local/lib/node_modules/pure-prompt/functions" ]]; then
+    fpath+=("/usr/local/lib/node_modules/pure-prompt/functions")
+    _setup_pure_prompt
+elif [[ -d "/usr/lib/node_modules/pure-prompt/functions" ]]; then
+    fpath+=("/usr/lib/node_modules/pure-prompt/functions")
+    _setup_pure_prompt
 fi
 # end of pure prompt info
 
