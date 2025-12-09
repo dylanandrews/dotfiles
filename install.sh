@@ -124,6 +124,12 @@ if [ -n "$CODESPACES" ]; then
         sudo apt-get update -qq && sudo apt-get install -y -qq eza 2>/dev/null || true
     fi
 
+    # Install zsh-syntax-highlighting via apt (more reliable than git clone)
+    if ! dpkg -l zsh-syntax-highlighting &> /dev/null; then
+        echo "🎨 Installing zsh-syntax-highlighting..."
+        sudo apt-get install -y -qq zsh-syntax-highlighting
+    fi
+
     # Create oh-my-zsh custom plugins directory
     mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
 
@@ -131,12 +137,6 @@ if [ -n "$CODESPACES" ]; then
     if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
         echo "💡 Installing zsh-autosuggestions..."
         git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
-    fi
-
-    # Install zsh-syntax-highlighting
-    if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
-        echo "🎨 Installing zsh-syntax-highlighting..."
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" 2>/dev/null || true
     fi
 
 else
