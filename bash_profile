@@ -1,3 +1,8 @@
+# Auto-switch to zsh in Codespaces (only for interactive shells to avoid breaking scripts)
+if [ -n "$CODESPACES" ] && [ -z "$ZSH_VERSION" ] && [[ $- == *i* ]] && command -v zsh &> /dev/null; then
+    exec zsh -l
+fi
+
 for file in ~/.{bash_prompt,aliases}; do
   [ -r "$file" ] && source "$file"
 done
