@@ -47,18 +47,8 @@ link_file "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/bash_profile" "$HOME/.bash_profile"
 link_file "$DOTFILES_DIR/aliases" "$HOME/.aliases"
 
-# Handle bashrc specially - Codespaces overwrites it, so append zsh switch instead
-if [ -n "$CODESPACES" ]; then
-    # Don't symlink bashrc in Codespaces - append zsh switch to existing bashrc
-    if ! grep -q "Auto-switch to zsh" "$HOME/.bashrc" 2>/dev/null; then
-        echo "" >> "$HOME/.bashrc"
-        echo "# Auto-switch to zsh (added by dotfiles)" >> "$HOME/.bashrc"
-        echo 'if [ -n "$CODESPACES" ] && [ -z "$ZSH_VERSION" ] && command -v zsh &> /dev/null; then' >> "$HOME/.bashrc"
-        echo '    exec zsh -l' >> "$HOME/.bashrc"
-        echo 'fi' >> "$HOME/.bashrc"
-        echo "  ✓ Added zsh auto-switch to ~/.bashrc"
-    fi
-else
+# Handle bashrc - don't modify in Codespaces (can break scripts that source it)
+if [ -z "$CODESPACES" ]; then
     link_file "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 fi
 
