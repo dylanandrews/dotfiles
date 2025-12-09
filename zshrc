@@ -74,19 +74,36 @@ _setup_pure_prompt() {
     prompt pure
 }
 
-# Try Homebrew first (macOS), then npm global (Codespaces/Linux)
+# Try Homebrew first (macOS), then find npm-installed pure-prompt (Codespaces/Linux)
 if command -v brew &> /dev/null; then
     fpath+=("$(brew --prefix)/share/zsh/site-functions")
     _setup_pure_prompt
-elif [[ -d "$HOME/.npm-global/lib/node_modules/pure-prompt/functions" ]]; then
-    fpath+=("$HOME/.npm-global/lib/node_modules/pure-prompt/functions")
-    _setup_pure_prompt
-elif [[ -d "/usr/local/lib/node_modules/pure-prompt/functions" ]]; then
-    fpath+=("/usr/local/lib/node_modules/pure-prompt/functions")
-    _setup_pure_prompt
-elif [[ -d "/usr/lib/node_modules/pure-prompt/functions" ]]; then
-    fpath+=("/usr/lib/node_modules/pure-prompt/functions")
-    _setup_pure_prompt
+else
+    # Find pure-prompt installed via npm (handles nvm, mise, or standard npm)
+    _pure_path=""
+
+    # Check common locations
+    for _check_path in \
+        "$HOME/.npm-global/lib/node_modules/pure-prompt" \
+        "/usr/local/lib/node_modules/pure-prompt" \
+        "/usr/lib/node_modules/pure-prompt" \
+        "/usr/local/share/nvm/versions/node"/*/lib/node_modules/pure-prompt \
+        "$HOME/.nvm/versions/node"/*/lib/node_modules/pure-prompt \
+        "$HOME/.local/share/mise/installs/node"/*/lib/node_modules/pure-prompt
+    do
+        if [[ -d "$_check_path" ]]; then
+            _pure_path="$_check_path"
+            break
+        fi
+    done
+
+    # If found, set up Pure prompt
+    if [[ -n "$_pure_path" ]]; then
+        fpath+=("$_pure_path/functions")
+        _setup_pure_prompt
+    fi
+
+    unset _pure_path _check_path
 fi
 # end of pure prompt info
 
