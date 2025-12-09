@@ -49,18 +49,15 @@ link_file "$DOTFILES_DIR/aliases" "$HOME/.aliases"
 
 # Handle bashrc specially - Codespaces overwrites it, so append zsh switch instead
 if [ -n "$CODESPACES" ]; then
-    # Add zsh auto-switch to BOTH .bashrc AND .bash_profile
-    # .bashrc = interactive non-login shells, .bash_profile = login shells (SSH)
-    for rcfile in "$HOME/.bashrc" "$HOME/.bash_profile"; do
-        if ! grep -q "Auto-switch to zsh" "$rcfile" 2>/dev/null; then
-            echo "" >> "$rcfile"
-            echo "# Auto-switch to zsh (added by dotfiles)" >> "$rcfile"
-            echo 'if [ -n "$CODESPACES" ] && [ -z "$ZSH_VERSION" ] && command -v zsh &> /dev/null; then' >> "$rcfile"
-            echo '    exec zsh -l' >> "$rcfile"
-            echo 'fi' >> "$rcfile"
-            echo "  ✓ Added zsh auto-switch to $rcfile"
-        fi
-    done
+    # Don't symlink bashrc in Codespaces - append zsh switch to existing bashrc
+    if ! grep -q "Auto-switch to zsh" "$HOME/.bashrc" 2>/dev/null; then
+        echo "" >> "$HOME/.bashrc"
+        echo "# Auto-switch to zsh (added by dotfiles)" >> "$HOME/.bashrc"
+        echo 'if [ -n "$CODESPACES" ] && [ -z "$ZSH_VERSION" ] && command -v zsh &> /dev/null; then' >> "$HOME/.bashrc"
+        echo '    exec zsh -l' >> "$HOME/.bashrc"
+        echo 'fi' >> "$HOME/.bashrc"
+        echo "  ✓ Added zsh auto-switch to ~/.bashrc"
+    fi
 else
     link_file "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 fi
