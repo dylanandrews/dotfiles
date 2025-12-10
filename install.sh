@@ -134,15 +134,43 @@ if [ -n "$CODESPACES" ]; then
         echo ""
         echo "⚙️  Setting up Claude Code MCP configuration..."
 
-        # Use envsubst to replace environment variables if available
-        if command -v envsubst &> /dev/null; then
-            envsubst < "$DOTFILES_DIR/claude.json.template" > "$HOME/.claude.json"
-            echo "  ✓ Claude Code MCPs configured with secrets from environment"
-        else
-            # Fallback: symlink template (Claude Code resolves env vars at runtime)
-            ln -sf "$DOTFILES_DIR/claude.json.template" "$HOME/.claude.json"
-            echo "  ✓ Linked .claude.json (environment variables will be resolved at runtime)"
+        # Check if jq is available for JSON merging
+        if ! command -v jq &> /dev/null; then
+            echo "  📦 Installing jq for JSON merging..."
+            sudo apt-get update -qq && sudo apt-get install -y -qq jq
         fi
+
+        # Generate base config from template with environment variable substitution
+        if command -v envsubst &> /dev/null; then
+            envsubst < "$DOTFILES_DIR/claude.json.template" > "$HOME/.claude.json.template.tmp"
+        else
+            cp "$DOTFILES_DIR/claude.json.template" "$HOME/.claude.json.template.tmp"
+        fi
+
+        # If .claude.json already exists, merge MCP config into it
+        if [ -f "$HOME/.claude.json" ]; then
+            echo "  📝 Merging MCP configuration into existing Claude Code config..."
+
+            # Extract MCP and theme settings from template
+            TEMPLATE_MCPS=$(jq -r '.mcpServers' "$HOME/.claude.json.template.tmp")
+            TEMPLATE_THEME=$(jq -r '.theme // empty' "$HOME/.claude.json.template.tmp")
+
+            # Merge into existing config (preserve all existing data, update only MCP and theme)
+            jq --argjson mcps "$TEMPLATE_MCPS" \
+               --arg theme "$TEMPLATE_THEME" \
+               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end)' \
+               "$HOME/.claude.json" > "$HOME/.claude.json.new"
+
+            mv "$HOME/.claude.json.new" "$HOME/.claude.json"
+            echo "  ✅ MCP configuration merged (existing settings preserved)"
+        else
+            # Fresh install - use template as-is
+            mv "$HOME/.claude.json.template.tmp" "$HOME/.claude.json"
+            echo "  ✅ Claude Code configured (fresh install)"
+        fi
+
+        # Clean up temp file
+        rm -f "$HOME/.claude.json.template.tmp"
     fi
 
 else
