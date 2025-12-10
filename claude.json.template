@@ -1,7 +1,7 @@
 {
   "theme": "dark-ansi",
   "disabledMcpServers": ["cortex", "datadog-mcp"],
-  "disabledMcpjsonServers": ["atlassian"],
+  "enabledMcpjsonServers": [],
   "mcpServers": {
     "atlassian": {
       "type": "stdio",

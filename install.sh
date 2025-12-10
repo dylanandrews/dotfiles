@@ -155,14 +155,14 @@ if [ -n "$CODESPACES" ]; then
             TEMPLATE_MCPS=$(jq -r '.mcpServers' "$HOME/.claude.json.template.tmp")
             TEMPLATE_THEME=$(jq -r '.theme // empty' "$HOME/.claude.json.template.tmp")
             TEMPLATE_DISABLED_MCPS=$(jq -r '.disabledMcpServers // []' "$HOME/.claude.json.template.tmp")
-            TEMPLATE_DISABLED_JSON_MCPS=$(jq -r '.disabledMcpjsonServers // []' "$HOME/.claude.json.template.tmp")
+            TEMPLATE_ENABLED_JSON_MCPS=$(jq -r '.enabledMcpjsonServers // []' "$HOME/.claude.json.template.tmp")
 
             # Merge into existing config (preserve all existing data, update from template)
             jq --argjson mcps "$TEMPLATE_MCPS" \
                --arg theme "$TEMPLATE_THEME" \
                --argjson disabledMcps "$TEMPLATE_DISABLED_MCPS" \
-               --argjson disabledJsonMcps "$TEMPLATE_DISABLED_JSON_MCPS" \
-               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end) + {disabledMcpServers: $disabledMcps, disabledMcpjsonServers: $disabledJsonMcps}' \
+               --argjson enabledJsonMcps "$TEMPLATE_ENABLED_JSON_MCPS" \
+               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
                "$HOME/.claude.json" > "$HOME/.claude.json.new"
 
             mv "$HOME/.claude.json.new" "$HOME/.claude.json"
