@@ -129,6 +129,18 @@ if [ -n "$CODESPACES" ]; then
         git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
     fi
 
+    # Configure git to use HTTPS instead of SSH for GitHub
+    echo ""
+    echo "🔐 Configuring git to use HTTPS for GitHub..."
+    git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+    git config --global url."https://github.com/".insteadOf "git@github.com:"
+
+    # Setup gh auth as git credential helper
+    if command -v gh &> /dev/null; then
+        gh auth setup-git 2>/dev/null || true
+        echo "  ✅ Git configured to use GitHub CLI for authentication"
+    fi
+
     # Setup Claude Code MCP configuration
     if [ -f "$DOTFILES_DIR/claude.json.template" ]; then
         echo ""
