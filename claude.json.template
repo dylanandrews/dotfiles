@@ -1,4 +1,5 @@
 {
+  "theme": "dark-ansi",
   "mcpServers": {
     "atlassian": {
       "type": "stdio",
@@ -14,25 +15,34 @@
       ],
       "env": {}
     },
+    "postgresql": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/postgres",
+        "${DATABASE_CONNECTION_STRING}"
+      ]
+    },
     "context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp"
-    }
-  },
-  "projects": {
-    "/workspaces/your-project": {
-      "mcpServers": {
-        "postgresql": {
-          "command": "docker",
-          "args": [
-            "run",
-            "-i",
-            "--rm",
-            "mcp/postgres",
-            "${DATABASE_CONNECTION_STRING}"
-          ]
-        }
-      }
+    },
+    "cortex": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--env",
+        "CORTEX_API_TOKEN=${CORTEX_API_TOKEN}",
+        "ghcr.io/cortexapps/cortex-mcp:latest"
+      ]
+    },
+    "datadog-mcp": {
+      "type": "http",
+      "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
     }
   }
 }
