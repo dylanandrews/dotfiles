@@ -151,14 +151,18 @@ if [ -n "$CODESPACES" ]; then
         if [ -f "$HOME/.claude.json" ]; then
             echo "  📝 Merging MCP configuration into existing Claude Code config..."
 
-            # Extract MCP and theme settings from template
+            # Extract settings from template
             TEMPLATE_MCPS=$(jq -r '.mcpServers' "$HOME/.claude.json.template.tmp")
             TEMPLATE_THEME=$(jq -r '.theme // empty' "$HOME/.claude.json.template.tmp")
+            TEMPLATE_DISABLED_MCPS=$(jq -r '.disabledMcpServers // []' "$HOME/.claude.json.template.tmp")
+            TEMPLATE_DISABLED_JSON_MCPS=$(jq -r '.disabledMcpjsonServers // []' "$HOME/.claude.json.template.tmp")
 
-            # Merge into existing config (preserve all existing data, update only MCP and theme)
+            # Merge into existing config (preserve all existing data, update from template)
             jq --argjson mcps "$TEMPLATE_MCPS" \
                --arg theme "$TEMPLATE_THEME" \
-               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end)' \
+               --argjson disabledMcps "$TEMPLATE_DISABLED_MCPS" \
+               --argjson disabledJsonMcps "$TEMPLATE_DISABLED_JSON_MCPS" \
+               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end) + {disabledMcpServers: $disabledMcps, disabledMcpjsonServers: $disabledJsonMcps}' \
                "$HOME/.claude.json" > "$HOME/.claude.json.new"
 
             mv "$HOME/.claude.json.new" "$HOME/.claude.json"
