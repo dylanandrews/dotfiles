@@ -129,6 +129,22 @@ if [ -n "$CODESPACES" ]; then
         git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null || true
     fi
 
+    # Setup Claude Code MCP configuration
+    if [ -f "$DOTFILES_DIR/claude.json.template" ]; then
+        echo ""
+        echo "⚙️  Setting up Claude Code MCP configuration..."
+
+        # Use envsubst to replace environment variables if available
+        if command -v envsubst &> /dev/null; then
+            envsubst < "$DOTFILES_DIR/claude.json.template" > "$HOME/.claude.json"
+            echo "  ✓ Claude Code MCPs configured with secrets from environment"
+        else
+            # Fallback: symlink template (Claude Code resolves env vars at runtime)
+            ln -sf "$DOTFILES_DIR/claude.json.template" "$HOME/.claude.json"
+            echo "  ✓ Linked .claude.json (environment variables will be resolved at runtime)"
+        fi
+    fi
+
 else
     # Non-Codespaces: only install zsh plugins if oh-my-zsh exists
     if [ -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then

@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-atlassian",
+        "--confluence-url=${CONFLUENCE_URL}",
+        "--confluence-username=${ATLASSIAN_USERNAME}",
+        "--confluence-token=${ATLASSIAN_TOKEN}",
+        "--jira-url=${JIRA_URL}",
+        "--jira-username=${ATLASSIAN_USERNAME}",
+        "--jira-token=${ATLASSIAN_TOKEN}"
+      ],
+      "env": {}
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  },
+  "projects": {
+    "/workspaces/your-project": {
+      "mcpServers": {
+        "postgresql": {
+          "command": "docker",
+          "args": [
+            "run",
+            "-i",
+            "--rm",
+            "mcp/postgres",
+            "${DATABASE_CONNECTION_STRING}"
+          ]
+        }
+      }
+    }
+  }
+}
