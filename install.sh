@@ -177,6 +177,22 @@ if [ -n "$CODESPACES" ]; then
         rm -f "$HOME/.claude.json.template.tmp"
     fi
 
+    # Remove project .mcp.json files that conflict with personal MCP config
+    if [ -f "/workspaces/betterup-monolith/.mcp.json" ]; then
+        echo ""
+        echo "🧹 Removing conflicting project MCP config..."
+        rm -f "/workspaces/betterup-monolith/.mcp.json"
+
+        # Add to local gitignore so it doesn't show as deleted
+        if [ -d "/workspaces/betterup-monolith/.git" ]; then
+            if ! grep -q "^\.mcp\.json$" "/workspaces/betterup-monolith/.git/info/exclude" 2>/dev/null; then
+                echo ".mcp.json" >> "/workspaces/betterup-monolith/.git/info/exclude"
+            fi
+        fi
+
+        echo "  ✅ Project MCP config removed (personal config will be used)"
+    fi
+
 else
     # Non-Codespaces: only install zsh plugins if oh-my-zsh exists
     if [ -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
