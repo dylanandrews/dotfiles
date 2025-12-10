@@ -174,15 +174,17 @@ if [ -n "$CODESPACES" ]; then
             # Extract settings from template
             TEMPLATE_MCPS=$(jq -r '.mcpServers' "$HOME/.claude.json.template.tmp")
             TEMPLATE_THEME=$(jq -r '.theme // empty' "$HOME/.claude.json.template.tmp")
+            TEMPLATE_NOTIF_CHANNEL=$(jq -r '.preferredNotifChannel // empty' "$HOME/.claude.json.template.tmp")
             TEMPLATE_DISABLED_MCPS=$(jq -r '.disabledMcpServers // []' "$HOME/.claude.json.template.tmp")
             TEMPLATE_ENABLED_JSON_MCPS=$(jq -r '.enabledMcpjsonServers // []' "$HOME/.claude.json.template.tmp")
 
             # Merge into existing config (preserve all existing data, update from template)
             jq --argjson mcps "$TEMPLATE_MCPS" \
                --arg theme "$TEMPLATE_THEME" \
+               --arg notifChannel "$TEMPLATE_NOTIF_CHANNEL" \
                --argjson disabledMcps "$TEMPLATE_DISABLED_MCPS" \
                --argjson enabledJsonMcps "$TEMPLATE_ENABLED_JSON_MCPS" \
-               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
+               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end) + (if $notifChannel != "" then {preferredNotifChannel: $notifChannel} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
                "$HOME/.claude.json" > "$HOME/.claude.json.new"
 
             mv "$HOME/.claude.json.new" "$HOME/.claude.json"
@@ -211,6 +213,20 @@ if [ -n "$CODESPACES" ]; then
         fi
 
         echo "  ✅ Project MCP config removed (personal config will be used)"
+    fi
+
+    # Setup Claude Code settings.json (hooks for notifications)
+    if [ -f "$DOTFILES_DIR/settings.json.template" ]; then
+        echo ""
+        echo "⚙️  Setting up Claude Code notification hooks..."
+
+        # Ensure .claude directory exists
+        mkdir -p "$HOME/.claude"
+
+        # Deploy settings.json
+        cp "$DOTFILES_DIR/settings.json.template" "$HOME/.claude/settings.json"
+
+        echo "  ✅ Notification hooks configured (visual + bell)"
     fi
 
 else

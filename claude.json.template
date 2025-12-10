@@ -1,5 +1,6 @@
 {
   "theme": "dark-ansi",
+  "preferredNotifChannel": "terminal_bell",
   "disabledMcpServers": ["cortex", "datadog-mcp"],
   "enabledMcpjsonServers": [],
   "mcpServers": {

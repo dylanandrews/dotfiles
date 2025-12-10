@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$CODESPACES\" ]; then echo -e '\\n\\033[1;32m✓ Claude is done\\033[0m\\n'; else afplay /System/Library/Sounds/Blow.aiff 2>/dev/null; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$CODESPACES\" ]; then echo -e '\\n\\033[1;31m⊗ Claude stopped\\033[0m\\n'; else afplay /System/Library/Sounds/Hero.aiff 2>/dev/null; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
