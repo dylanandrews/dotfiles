@@ -142,7 +142,9 @@ if [ -n "$CODESPACES" ]; then
     fi
 
     # Setup Claude Code MCP configuration
-    if [ -f "$DOTFILES_DIR/claude.json.template" ]; then
+    # TEMPORARILY DISABLED - debugging Codespace hang issue
+    # Infrastructure now provides MCP config, this may be causing conflicts
+    if false && [ -f "$DOTFILES_DIR/claude.json.template" ]; then
         echo ""
         echo "⚙️  Setting up Claude Code MCP configuration..."
 
