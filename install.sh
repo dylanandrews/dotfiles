@@ -176,13 +176,13 @@ if [ -n "$CODESPACES" ]; then
             TEMPLATE_DISABLED_MCPS=$(jq -r '.disabledMcpServers // []' "$HOME/.claude.json.template.tmp")
             TEMPLATE_ENABLED_JSON_MCPS=$(jq -r '.enabledMcpjsonServers // []' "$HOME/.claude.json.template.tmp")
 
-            # Merge into existing config (preserve all existing data, update from template)
+            # Merge into existing config (preserve existing MCPs, add new ones from template)
             jq --argjson mcps "$TEMPLATE_MCPS" \
                --arg theme "$TEMPLATE_THEME" \
                --arg notifChannel "$TEMPLATE_NOTIF_CHANNEL" \
                --argjson disabledMcps "$TEMPLATE_DISABLED_MCPS" \
                --argjson enabledJsonMcps "$TEMPLATE_ENABLED_JSON_MCPS" \
-               '. + {mcpServers: $mcps} + (if $theme != "" then {theme: $theme} else {} end) + (if $notifChannel != "" then {preferredNotifChannel: $notifChannel} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
+               '. + {mcpServers: (.mcpServers + $mcps)} + (if $theme != "" then {theme: $theme} else {} end) + (if $notifChannel != "" then {preferredNotifChannel: $notifChannel} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
                "$HOME/.claude.json" > "$HOME/.claude.json.new"
 
             mv "$HOME/.claude.json.new" "$HOME/.claude.json"
