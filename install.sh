@@ -152,20 +152,18 @@ if [ -n "$CODESPACES" ]; then
             sudo apt-get update -qq && sudo apt-get install -y -qq jq
         fi
 
-        # Install uv (provides uvx for running MCP servers)
-        if ! command -v uvx &> /dev/null; then
-            echo "  📦 Installing uv (for MCP server execution)..."
-            curl -LsSf https://astral.sh/uv/install.sh | sh
-            # Add to PATH for current session
-            export PATH="$HOME/.cargo/bin:$PATH"
-        fi
-
         # Generate base config from template with environment variable substitution
         if command -v envsubst &> /dev/null; then
             envsubst < "$DOTFILES_DIR/claude.json.template" > "$HOME/.claude.json.template.tmp"
         else
             cp "$DOTFILES_DIR/claude.json.template" "$HOME/.claude.json.template.tmp"
         fi
+
+        # In Codespaces, remove MCPs that are provided by infrastructure
+        echo "  🔧 Filtering infrastructure MCPs (atlassian, postgresql)..."
+        jq 'del(.mcpServers.atlassian, .mcpServers.postgresql)' \
+            "$HOME/.claude.json.template.tmp" > "$HOME/.claude.json.template.filtered"
+        mv "$HOME/.claude.json.template.filtered" "$HOME/.claude.json.template.tmp"
 
         # If .claude.json already exists, merge MCP config into it
         if [ -f "$HOME/.claude.json" ]; then
