@@ -162,7 +162,10 @@ if [ -n "$CODESPACES" ]; then
         # In Codespaces, remove MCPs that are provided by infrastructure
         echo "  🔧 Filtering infrastructure MCPs (atlassian, postgresql)..."
         jq 'del(.mcpServers.atlassian, .mcpServers.postgresql)' \
-            "$HOME/.claude.json.template.tmp" > "$HOME/.claude.json.template.filtered"
+            "$HOME/.claude.json.template.tmp" > "$HOME/.claude.json.template.filtered" 2>/dev/null || {
+            echo "  ⚠️  Warning: MCP filtering failed, using unfiltered template"
+            cp "$HOME/.claude.json.template.tmp" "$HOME/.claude.json.template.filtered"
+        }
         mv "$HOME/.claude.json.template.filtered" "$HOME/.claude.json.template.tmp"
 
         # If .claude.json already exists, merge MCP config into it
@@ -195,22 +198,6 @@ if [ -n "$CODESPACES" ]; then
 
         # Clean up temp file
         rm -f "$HOME/.claude.json.template.tmp"
-    fi
-
-    # Remove project .mcp.json files that conflict with personal MCP config
-    if [ -f "/workspaces/betterup-monolith/.mcp.json" ]; then
-        echo ""
-        echo "🧹 Removing conflicting project MCP config..."
-        rm -f "/workspaces/betterup-monolith/.mcp.json"
-
-        # Add to local gitignore so it doesn't show as deleted
-        if [ -d "/workspaces/betterup-monolith/.git" ]; then
-            if ! grep -q "^\.mcp\.json$" "/workspaces/betterup-monolith/.git/info/exclude" 2>/dev/null; then
-                echo ".mcp.json" >> "/workspaces/betterup-monolith/.git/info/exclude"
-            fi
-        fi
-
-        echo "  ✅ Project MCP config removed (personal config will be used)"
     fi
 
     # Setup Claude Code settings.json (hooks for notifications)
