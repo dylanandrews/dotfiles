@@ -179,14 +179,25 @@ if [ -n "$CODESPACES" ]; then
             TEMPLATE_DISABLED_MCPS=$(jq -r '.disabledMcpServers // []' "$HOME/.claude.json.template.tmp")
             TEMPLATE_ENABLED_JSON_MCPS=$(jq -r '.enabledMcpjsonServers // []' "$HOME/.claude.json.template.tmp")
 
-            # Merge into existing config (preserve existing MCPs, add new ones from template)
-            jq --argjson mcps "$TEMPLATE_MCPS" \
-               --arg theme "$TEMPLATE_THEME" \
-               --arg notifChannel "$TEMPLATE_NOTIF_CHANNEL" \
-               --argjson disabledMcps "$TEMPLATE_DISABLED_MCPS" \
-               --argjson enabledJsonMcps "$TEMPLATE_ENABLED_JSON_MCPS" \
-               '. + {mcpServers: (.mcpServers + $mcps)} + (if $theme != "" then {theme: $theme} else {} end) + (if $notifChannel != "" then {preferredNotifChannel: $notifChannel} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
-               "$HOME/.claude.json" > "$HOME/.claude.json.new"
+            # Check if this is a project-specific config (nested structure)
+            if jq -e '.projects | type == "object"' "$HOME/.claude.json" > /dev/null 2>&1; then
+                # Project-specific config: merge at project level
+                PROJECT_PATH="/workspaces/betterup-monolith"
+                echo "  🔧 Detected project-specific config, merging at project level..."
+                jq --argjson mcps "$TEMPLATE_MCPS" \
+                   --arg projectPath "$PROJECT_PATH" \
+                   '.projects[$projectPath].mcpServers = (.projects[$projectPath].mcpServers + $mcps)' \
+                   "$HOME/.claude.json" > "$HOME/.claude.json.new"
+            else
+                # Flat config: merge at root level
+                jq --argjson mcps "$TEMPLATE_MCPS" \
+                   --arg theme "$TEMPLATE_THEME" \
+                   --arg notifChannel "$TEMPLATE_NOTIF_CHANNEL" \
+                   --argjson disabledMcps "$TEMPLATE_DISABLED_MCPS" \
+                   --argjson enabledJsonMcps "$TEMPLATE_ENABLED_JSON_MCPS" \
+                   '. + {mcpServers: (.mcpServers + $mcps)} + (if $theme != "" then {theme: $theme} else {} end) + (if $notifChannel != "" then {preferredNotifChannel: $notifChannel} else {} end) + {disabledMcpServers: $disabledMcps, enabledMcpjsonServers: $enabledJsonMcps}' \
+                   "$HOME/.claude.json" > "$HOME/.claude.json.new"
+            fi
 
             mv "$HOME/.claude.json.new" "$HOME/.claude.json"
             echo "  ✅ MCP configuration merged (existing settings preserved)"
