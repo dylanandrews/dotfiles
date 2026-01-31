@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# gather-pr-context - Collect all context needed for PR description generation
+# Outputs structured data that Claude can use to generate a PR description
+
+require 'open3'
+
+def run_git(command)
+  stdout, stderr, status = Open3.capture3("git #{command}")
+  [stdout.strip, stderr.strip, status.success?]
+end
+
+# Get current branch
+branch, _, success = run_git('branch --show-current')
+if !success || branch.empty?
+  warn 'Error: Not on a branch'
+  exit 1
+end
+
+if %w[main master].include?(branch)
+  warn "Error: Cannot create PR from #{branch} branch"
+  exit 1
+end
+
+# Extract ticket number from branch name (e.g., ENG-1234/feature-name or AIPE-567-feature)
+ticket = branch[/([A-Z]+-\d+)/, 1] || ''
+
+# Generate clean title from branch name
+title = branch
+  .sub(/^[A-Z]*-\d*[\/-]*/, '') # Remove ticket prefix
+  .tr('-_', '  ')                # Replace dashes/underscores with spaces
+  .strip
+title = title[0].upcase + title[1..] if title.length > 0
+
+puts '=== BRANCH ==='
+puts branch
+puts
+
+puts '=== TICKET ==='
+puts ticket
+puts
+
+puts '=== TITLE ==='
+puts title
+puts
+
+puts '=== COMMITS ==='
+commits, _, _ = run_git('log --pretty=format:"* %s%n%n%b" --no-merges origin/main...HEAD')
+puts commits.empty? ? '(no commits)' : commits
+puts
+
+puts '=== DIFF ==='
+diff, _, _ = run_git('diff origin/main...HEAD')
+puts diff.empty? ? '(no diff)' : diff
+puts
+
+puts '=== PLAN DOCUMENTS ==='
+if !ticket.empty? && Dir.exist?('.coding-agent/plans')
+  plan_files = Dir.glob(".coding-agent/plans/*#{ticket}*")
+  if plan_files.any?
+    plan_files.each do |file|
+      puts "--- File: #{file} ---"
+      puts File.read(file)
+      puts
+    end
+  else
+    puts "(no plan documents found for #{ticket})"
+  end
+else
+  puts '(no ticket number found or no plans directory)'
+end

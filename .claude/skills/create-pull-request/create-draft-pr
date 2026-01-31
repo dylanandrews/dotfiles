@@ -1,0 +1,137 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# create-draft-pr - Create a draft PR with the given title and body
+# Called by the create-pull-request skill after user approval
+
+require 'open3'
+require 'optparse'
+require 'shellwords'
+
+def run_command(command, exit_on_fail: true)
+  stdout, stderr, status = Open3.capture3(command)
+  unless status.success?
+    if exit_on_fail
+      warn "Error: #{stderr.empty? ? stdout : stderr}"
+      exit 1
+    end
+  end
+  [stdout.strip, stderr.strip, status.success?]
+end
+
+def run_git(command, exit_on_fail: true)
+  run_command("git #{command}", exit_on_fail: exit_on_fail)
+end
+
+# Parse arguments
+options = { base: 'main', dry_run: false }
+parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: create-draft-pr --title <title> --body-file <file> [--base <branch>]'
+
+  opts.on('--title TITLE', 'PR title (required)') { |v| options[:title] = v }
+  opts.on('--body-file FILE', 'File containing PR body/description (required)') { |v| options[:body_file] = v }
+  opts.on('--base BRANCH', 'Base branch (default: main)') { |v| options[:base] = v }
+  opts.on('--dry-run', 'Show what would be done without creating PR') { options[:dry_run] = true }
+  opts.on('-h', '--help', 'Show this help') do
+    puts opts
+    exit
+  end
+end
+
+begin
+  parser.parse!
+rescue OptionParser::InvalidOption => e
+  warn e.message
+  puts parser
+  exit 1
+end
+
+if options[:title].nil? || options[:body_file].nil?
+  warn 'Error: --title and --body-file are required'
+  puts parser
+  exit 1
+end
+
+unless File.exist?(options[:body_file])
+  warn "Error: Body file not found: #{options[:body_file]}"
+  exit 1
+end
+
+# Get current branch
+current_branch, _, success = run_git('branch --show-current')
+if !success || current_branch.empty?
+  warn 'Error: Not on a branch'
+  exit 1
+end
+
+if %w[main master].include?(current_branch)
+  warn "Error: Cannot create PR from #{current_branch} branch"
+  exit 1
+end
+
+puts '=== Draft PR Creation ==='
+puts "Branch: #{current_branch}"
+puts "Base: #{options[:base]}"
+puts "Title: #{options[:title]}"
+puts
+
+if options[:dry_run]
+  puts '[DRY RUN] Would perform the following:'
+  puts "  1. Fetch origin/#{options[:base]}"
+  puts "  2. Rebase on origin/#{options[:base]}"
+  puts "  3. Push to origin/#{current_branch}"
+  puts '  4. Create draft PR'
+  puts '  5. Add review-me label'
+  puts
+  puts 'PR Body:'
+  puts File.read(options[:body_file])
+  exit 0
+end
+
+# Check for upstream tracking
+upstream, _, has_upstream = run_git("rev-parse --abbrev-ref #{current_branch}@{upstream}", exit_on_fail: false)
+unless has_upstream
+  puts 'Setting up origin tracking...'
+  run_git("push -u origin #{current_branch}")
+end
+
+# Fetch and rebase
+puts "Fetching origin/#{options[:base]}..."
+run_git("fetch origin #{options[:base]}")
+
+puts "Rebasing on origin/#{options[:base]}..."
+_, _, rebase_success = run_git("rebase origin/#{options[:base]}", exit_on_fail: false)
+unless rebase_success
+  warn 'Error: Rebase failed. Please resolve conflicts and try again.'
+  exit 1
+end
+
+# Push changes
+puts 'Pushing to origin...'
+run_git('push origin HEAD --force-with-lease')
+
+# Create the PR
+puts 'Creating draft PR...'
+pr_url, pr_err, pr_success = run_command(
+  "gh pr create --base #{options[:base]} --title #{options[:title].shellescape} --body-file #{options[:body_file].shellescape} --draft",
+  exit_on_fail: false
+)
+
+unless pr_success
+  warn "Error creating PR: #{pr_err.empty? ? pr_url : pr_err}"
+  exit 1
+end
+
+puts pr_url
+
+# Add review-me label
+puts 'Adding review-me label...'
+run_command('gh pr edit --add-label "review-me"', exit_on_fail: false)
+
+# Open in browser (skip in Codespaces)
+unless ENV['CODESPACES']
+  run_command('gh pr view --web', exit_on_fail: false)
+end
+
+puts
+puts 'Draft PR created successfully!'

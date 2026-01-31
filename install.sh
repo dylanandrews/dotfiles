@@ -80,10 +80,22 @@ if [ -d "$DOTFILES_DIR/.claude" ]; then
     echo ""
     echo "📁 Linking Claude Code configuration..."
     mkdir -p "$HOME/.claude"
+    mkdir -p "$HOME/.claude/skills"
     for file in "$DOTFILES_DIR/.claude"/*; do
         if [ -f "$file" ]; then
             filename=$(basename "$file")
             link_file "$file" "$HOME/.claude/$filename"
+        fi
+    done
+
+    # Link commands directory
+    link_dir "$DOTFILES_DIR/.claude/commands" "$HOME/.claude/commands"
+
+    # Link custom skills (individual directories)
+    for skill in "$DOTFILES_DIR/.claude/skills"/*; do
+        if [ -d "$skill" ]; then
+            skillname=$(basename "$skill")
+            link_dir "$skill" "$HOME/.claude/skills/$skillname"
         fi
     done
 fi
