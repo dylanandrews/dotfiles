@@ -142,8 +142,12 @@ if [ -n "$CODESPACES" ]; then
     fi
 
     # Configure git to use HTTPS instead of SSH for GitHub
+    # The dotfiles gitconfig has SSH rewrites (insteadOf) for local use with SSH keys.
+    # In Codespaces, we need HTTPS with tokens, so remove the SSH rewrites first,
+    # then add reverse rules to ensure any SSH URLs get converted to HTTPS.
     echo ""
     echo "🔐 Configuring git to use HTTPS for GitHub..."
+    git config --global --unset-all 'url.ssh://git@github.com/.insteadof' 2>/dev/null || true
     git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
     git config --global url."https://github.com/".insteadOf "git@github.com:"
 
