@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Read(/Users/dylanandrews/.claude/*)",
+      "Write(/Users/dylanandrews/Dropbox/betterup_obsidian_vault/*)",
+      "Edit(/Users/dylanandrews/Dropbox/betterup_obsidian_vault/*)",
+      "Write(/Users/dylanandrews/Documents/betterup_repos/ai-workbench/*)",
+      "Edit(/Users/dylanandrews/Documents/betterup_repos/ai-workbench/*)",
+      "Bash(bin/codeownership:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(tail:*)",
+      "Bash(cat:*)",
+      "Bash(wc:*)",
+      "Bash(awk:*)",
+      "Bash(tree:*)",
+      "Bash(python3:*)",
+      "Bash(gh api:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(jq:*)",
+      "Bash(git fetch:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker logs:*)",
+      "Bash(bundle show:*)",
+      "Bash(bin/rake:*)",
+      "Bash(bin/bundle:*)",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(bash -c:*)",
+      "Bash(for:*)",
+      "Bash(echo:*)",
+      "Bash(pbcopy:*)",
+      "Bash(codex:*)",
+      "Bash(gemini:*)"
+    ],
+    "additionalDirectories": [
+      "/Users/dylanandrews/Dropbox/betterup_obsidian_vault/"
+    ]
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Blow.aiff"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Hero.aiff"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude-code-docs/claude-docs-helper.sh hook-check"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "pr-review-toolkit@claude-code-plugins": true,
+    "beads@beads-marketplace": true,
+    "feature-dev@claude-code-plugins": true,
+    "example-skills@anthropic-agent-skills": true,
+    "ralph-wiggum@claude-code-plugins": true
+  },
+  "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true
+}

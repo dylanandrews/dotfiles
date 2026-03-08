@@ -91,6 +91,12 @@ if [ -d "$DOTFILES_DIR/.claude" ]; then
     # Link commands directory
     link_dir "$DOTFILES_DIR/.claude/commands" "$HOME/.claude/commands"
 
+    # Link agents directory
+    link_dir "$DOTFILES_DIR/.claude/agents" "$HOME/.claude/agents"
+
+    # Link output-styles directory
+    link_dir "$DOTFILES_DIR/.claude/output-styles" "$HOME/.claude/output-styles"
+
     # Link custom skills (individual directories)
     for skill in "$DOTFILES_DIR/.claude/skills"/*; do
         if [ -d "$skill" ]; then
@@ -237,7 +243,8 @@ if [ -n "$CODESPACES" ]; then
         # Ensure .claude directory exists
         mkdir -p "$HOME/.claude"
 
-        # Deploy settings.json
+        # Remove symlink before copying template (don't overwrite dotfiles source)
+        rm -f "$HOME/.claude/settings.json"
         cp "$DOTFILES_DIR/settings.json.template" "$HOME/.claude/settings.json"
 
         echo "  ✅ Notification hooks configured (visual + bell)"
