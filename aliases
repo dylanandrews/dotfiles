@@ -9,6 +9,7 @@ alias cc="say 'Command complete'"
 # Claude
 alias cr="claude --resume"
 alias ch="cd ~/.claude"
+alias cdp="claude --dangerously-skip-permissions"
 
 # Cursor
 alias cs="cursor ."
