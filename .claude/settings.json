@@ -46,7 +46,7 @@
       "/Users/dylanandrews/Dropbox/betterup_obsidian_vault/"
     ]
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -88,11 +88,27 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "pr-review-toolkit@claude-code-plugins": true,
-    "beads@beads-marketplace": true,
-    "feature-dev@claude-code-plugins": true,
+    "beads@beads-marketplace": false,
     "example-skills@anthropic-agent-skills": true,
-    "ralph-wiggum@claude-code-plugins": true
+    "learning-output-style@claude-code-plugins": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "atlassian-cli@betterup-engineering": true,
+    "platoon-harness@betterup-engineering": true,
+    "betterup-toolkit@betterup-engineering": true,
+    "playwright@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "harness-improvement@betterup-engineering": true,
+    "ruby-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-code-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-code"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true
