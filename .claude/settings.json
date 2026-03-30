@@ -93,20 +93,29 @@
     "learning-output-style@claude-code-plugins": true,
     "code-review@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "atlassian-cli@betterup-engineering": true,
-    "platoon-harness@betterup-engineering": true,
-    "betterup-toolkit@betterup-engineering": true,
     "playwright@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
-    "harness-improvement@betterup-engineering": true,
-    "ruby-lsp@claude-plugins-official": true
+    "ruby-lsp@claude-plugins-official": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "claude-code-plugins": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-code"
+      }
+    },
+    "betterup-engineering": {
+      "source": {
+        "source": "github",
+        "repo": "betterup/betterup-claude-code-toolkit"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
       }
     }
   },

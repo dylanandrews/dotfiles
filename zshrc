@@ -143,5 +143,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export BUNDLE_RUBYGEMS__PKG__GITHUB_COM="$NODE_AUTH_TOKEN"
 
+# GitHub token for Claude Code plugin auto-updates (private marketplace repos)
+# Reuses NODE_AUTH_TOKEN (classic PAT from ~/.dotfiles/init.sh) which already has repo scope
+export GITHUB_TOKEN="$NODE_AUTH_TOKEN"
+
 # Add libpq bin to PATH (for Ruby LSP PostgreSQL gem compilation) - macOS only
 [[ -d "/opt/homebrew/opt/libpq/bin" ]] && export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
