@@ -1,6 +1,9 @@
-autoload -Uz compinit; compinit
-autoload -Uz bashcompinit; bashcompinit
-compdef _git stripe-git=git # this line specifically will fix git autocompletion
+# Warp replaces ZLE and completion — skip compinit/compdef in Warp
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  autoload -Uz compinit; compinit
+  autoload -Uz bashcompinit; bashcompinit
+  compdef _git stripe-git=git # this line specifically will fix git autocompletion
+fi
 
 # extra files in ~/.zsh/configs/pre , ~/.zsh/configs , and ~/.zsh/configs/post
 # these are loaded first, second, and third, respectively.
@@ -55,85 +58,106 @@ precmd() {
 }
 fi
 
-# Pure prompt setup
-_setup_pure_prompt() {
-    autoload -U promptinit; promptinit
+# Warp has its own prompt — skip Pure prompt setup
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  # Pure prompt setup
+  _setup_pure_prompt() {
+      autoload -U promptinit; promptinit
 
-    # optionally define some options
-    PURE_CMD_MAX_EXEC_TIME=10
+      # optionally define some options
+      PURE_CMD_MAX_EXEC_TIME=10
 
-    # change the path color
-    zstyle :prompt:pure:path color 205
+      # change the path color
+      zstyle :prompt:pure:path color 205
 
-    # change the color for both `prompt:success` and `prompt:error`
-    zstyle ':prompt:pure:prompt:*' color cyan
+      # change the color for both `prompt:success` and `prompt:error`
+      zstyle ':prompt:pure:prompt:*' color cyan
 
-    zstyle :prompt:pure:git:branch color 069
-    zstyle :prompt:pure:git:branch:cached color 069
+      zstyle :prompt:pure:git:branch color 069
+      zstyle :prompt:pure:git:branch:cached color 069
 
-    prompt pure
-}
+      prompt pure
+  }
 
-# Try Homebrew first (macOS), then find npm-installed pure-prompt (Codespaces/Linux)
-if command -v brew &> /dev/null; then
-    fpath+=("$(brew --prefix)/share/zsh/site-functions")
-    _setup_pure_prompt
-else
-    # Find pure-prompt installed via npm (handles nvm, mise, or standard npm)
-    _pure_path=""
+  # Try Homebrew first (macOS), then find npm-installed pure-prompt (Codespaces/Linux)
+  if command -v brew &> /dev/null; then
+      fpath+=("$(brew --prefix)/share/zsh/site-functions")
+      _setup_pure_prompt
+  else
+      # Find pure-prompt installed via npm (handles nvm, mise, or standard npm)
+      _pure_path=""
 
-    # Check common locations
-    for _check_path in \
-        "$HOME/.npm-global/lib/node_modules/pure-prompt" \
-        "/usr/local/lib/node_modules/pure-prompt" \
-        "/usr/lib/node_modules/pure-prompt" \
-        "/usr/local/share/nvm/versions/node"/*/lib/node_modules/pure-prompt \
-        "$HOME/.nvm/versions/node"/*/lib/node_modules/pure-prompt \
-        "$HOME/.local/share/mise/installs/node"/*/lib/node_modules/pure-prompt
-    do
-        if [[ -d "$_check_path" ]]; then
-            _pure_path="$_check_path"
-            break
-        fi
-    done
+      # Check common locations
+      for _check_path in \
+          "$HOME/.npm-global/lib/node_modules/pure-prompt" \
+          "/usr/local/lib/node_modules/pure-prompt" \
+          "/usr/lib/node_modules/pure-prompt" \
+          "/usr/local/share/nvm/versions/node"/*/lib/node_modules/pure-prompt \
+          "$HOME/.nvm/versions/node"/*/lib/node_modules/pure-prompt \
+          "$HOME/.local/share/mise/installs/node"/*/lib/node_modules/pure-prompt
+      do
+          if [[ -d "$_check_path" ]]; then
+              _pure_path="$_check_path"
+              break
+          fi
+      done
 
-    # If found, set up Pure prompt
-    if [[ -n "$_pure_path" ]]; then
-        fpath+=("$_pure_path/functions")
-        _setup_pure_prompt
-    fi
+      # If found, set up Pure prompt
+      if [[ -n "$_pure_path" ]]; then
+          fpath+=("$_pure_path/functions")
+          _setup_pure_prompt
+      fi
 
-    unset _pure_path _check_path
+      unset _pure_path _check_path
+  fi
 fi
 # end of pure prompt info
 
-# Oh-my-zsh plugins (only if installed)
-# zsh-syntax-highlighting: check apt location (Codespaces) first, then oh-my-zsh (Mac)
-if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [[ -f ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-    source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Oh-my-zsh plugins — incompatible with Warp's input editor
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  # zsh-syntax-highlighting: check apt location (Codespaces) first, then oh-my-zsh (Mac)
+  if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+      source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  elif [[ -f ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+      source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
+  [[ -f ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
-[[ -f ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Temporarily unset PREFIX for NVM compatibility
 unset PREFIX
 
+# Lazy-load NVM — only initializes on first use of nvm/node/npm/npx
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+_lazy_load_nvm() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+}
+nvm()  { _lazy_load_nvm; nvm "$@"; }
+node() { _lazy_load_nvm; node "$@"; }
+npm()  { _lazy_load_nvm; npm "$@"; }
+npx()  { _lazy_load_nvm; npx "$@"; }
 
 # Load local env if it exists
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 [[ -s "$HOME/.dotfiles/init.sh" ]] && source "$HOME/.dotfiles/init.sh"
 
-# For python for AI course (only if pyenv is installed)
-if command -v pyenv &> /dev/null || [[ -d "$HOME/.pyenv" ]]; then
+# Lazy-load pyenv — only initializes on first use of pyenv/python/python3/pip
+if [[ -d "$HOME/.pyenv" ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)" 2>/dev/null
-    eval "$(pyenv init -)" 2>/dev/null
+    _lazy_load_pyenv() {
+      unset -f pyenv python python3 pip pip3
+      eval "$(pyenv init --path)" 2>/dev/null
+      eval "$(pyenv init -)" 2>/dev/null
+    }
+    pyenv()   { _lazy_load_pyenv; pyenv "$@"; }
+    python()  { _lazy_load_pyenv; python "$@"; }
+    python3() { _lazy_load_pyenv; python3 "$@"; }
+    pip()     { _lazy_load_pyenv; pip "$@"; }
+    pip3()    { _lazy_load_pyenv; pip3 "$@"; }
 fi
 
 # Mise (only if installed)

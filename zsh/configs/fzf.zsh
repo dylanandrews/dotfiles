@@ -1,14 +1,17 @@
 # fzf configuration
 # Source fzf key bindings and completion from Homebrew installation
 
-# Source fzf key bindings (^R for history, ^T for files, ALT-C for cd)
-if [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
-  source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-fi
+# FZF key bindings use ZLE widgets — skip in Warp
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  # Source fzf key bindings (^R for history, ^T for files, ALT-C for cd)
+  if [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
+    source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+  fi
 
-# Source fzf completion
-if [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]; then
-  source /opt/homebrew/opt/fzf/shell/completion.zsh
+  # Source fzf completion
+  if [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]; then
+    source /opt/homebrew/opt/fzf/shell/completion.zsh
+  fi
 fi
 
 # Default fzf options
