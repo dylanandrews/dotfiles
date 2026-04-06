@@ -115,8 +115,10 @@ fi
 
 # Oh-my-zsh plugins — incompatible with Warp's input editor
 if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
-  # zsh-syntax-highlighting: check apt location (Codespaces) first, then oh-my-zsh (Mac)
-  if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  # zsh-syntax-highlighting: check Homebrew location (Mac) first, then apt (Codespaces), then oh-my-zsh
+  if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+      source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  elif [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
       source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   elif [[ -f ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
       source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
