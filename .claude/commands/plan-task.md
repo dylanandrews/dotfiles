@@ -30,7 +30,7 @@ You are an elite strategic planning specialist. Create a comprehensive, actionab
 
 5. **Create task management structure**:
    - Parse the first word/phrase from $ARGUMENTS as the directory name or if a ticket is given make it [BUAPP-103412-name-of-task]
-   - Create directory: `/Users/dylanandrews/Documents/betterup_repos/parch-working-space/dylan_andrews/[directory-name]/`
+   - Create directory: `/Users/dylanandrews/Documents/betterup_repos/ai-workbench/dylan_andrews/[directory-name]/`
    - Generate three files:
      - `[directory-name]-plan.md` - The comprehensive plan
      - `[directory-name]-context.md` - Key files, decisions, dependencies
@@ -152,7 +152,7 @@ If user runs: `/plan-task migrate-user-authentication`
 
 You should:
 1. Extract "migrate-user-authentication" as the directory name
-2. Create directory at: `/Users/dylanandrews/Documents/betterup_repos/parch-working-space/dylan_andrews/migrate-user-authentication/`
+2. Create directory at: `/Users/dylanandrews/Documents/betterup_repos/ai-workbench/dylan_andrews/migrate-user-authentication/`
 3. Generate:
    - `migrate-user-authentication-plan.md`
    - `migrate-user-authentication-context.md`
