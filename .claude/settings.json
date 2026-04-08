@@ -137,6 +137,7 @@
       "Bash(npm *)",
       "Bash(npm)"
     ],
+    "defaultMode": "auto",
     "additionalDirectories": [
       "/Users/dylanandrews/Dropbox/betterup_obsidian_vault/"
     ]
@@ -216,5 +217,6 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }
