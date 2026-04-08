@@ -4,28 +4,12 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
-    "deny": [
-      "Bash(git push --force)",
-      "Bash(git push --force *)",
-      "Bash(git push -f *)",
-      "Bash(git push origin +*)",
-      "Bash(git reset --hard *)",
-      "Bash(git reset --hard)",
-      "Bash(curl *//github.com/*)",
-      "Bash(curl *//api.github.com/*)",
-      "Bash(curl *//raw.githubusercontent.com/*)",
-      "Bash(gh auth token *)",
-      "Bash(gh auth token)",
-      "Bash(npm *)",
-      "Bash(npm)"
-    ],
     "allow": [
       "Read(/Users/dylanandrews/.claude/*)",
       "Write(/Users/dylanandrews/Dropbox/betterup_obsidian_vault/*)",
       "Edit(/Users/dylanandrews/Dropbox/betterup_obsidian_vault/*)",
       "Write(/Users/dylanandrews/Documents/betterup_repos/ai-workbench/*)",
       "Edit(/Users/dylanandrews/Documents/betterup_repos/ai-workbench/*)",
-
       "Edit",
       "MultiEdit",
       "Write",
@@ -40,7 +24,6 @@
       "WebFetch(domain:api.atlassian.com)",
       "WebFetch(domain:developer.atlassian.com)",
       "WebSearch",
-
       "Bash(.github/scripts/get-check-annotations *)",
       "Bash(.github/scripts/run-rspec-repeat *)",
       "Bash(bin/bundle-audit *)",
@@ -69,7 +52,6 @@
       "Bash(bin/utils/codespace/start-orchestrator *)",
       "Bash(bin/utils/codespace/start-worker *)",
       "Bash(bundle exec bin/ff *)",
-
       "Bash(awk:*)",
       "Bash(bash -c:*)",
       "Bash(cat:*)",
@@ -117,13 +99,9 @@
       "Bash(which:*)",
       "Bash(xmllint:*)",
       "Bash(yamllint:*)",
-
       "Bash(git:*)",
-
       "Bash(gh:*)",
-
       "Bash(npx:*)",
-
       "Bash(acli:*)",
       "Bash(bundle:*)",
       "Bash(chmod:*)",
@@ -139,12 +117,25 @@
       "Bash(codex:*)",
       "Bash(gemini:*)",
       "Bash(rm:*)",
-
       "Bash(yarn:*)",
-
       "Glob",
       "Grep",
       "Read"
+    ],
+    "deny": [
+      "Bash(git push --force)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push origin +*)",
+      "Bash(git reset --hard *)",
+      "Bash(git reset --hard)",
+      "Bash(curl *//github.com/*)",
+      "Bash(curl *//api.github.com/*)",
+      "Bash(curl *//raw.githubusercontent.com/*)",
+      "Bash(gh auth token *)",
+      "Bash(gh auth token)",
+      "Bash(npm *)",
+      "Bash(npm)"
     ],
     "additionalDirectories": [
       "/Users/dylanandrews/Dropbox/betterup_obsidian_vault/"
