@@ -1,9 +1,2 @@
-# Warp handles its own completion — skip compinit to avoid ZLE conflicts
-if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
-  # load our own completion functions
-  fpath=(~/.zsh/completion /usr/local/share/zsh/site-functions $fpath)
-
-  # completion
-  autoload -U compinit
-  compinit
-fi
+# fpath additions moved to pre/completion.zsh so they're available before compinit
+# compinit is called once in .zshrc — no duplicate needed here

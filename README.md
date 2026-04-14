@@ -24,6 +24,7 @@
 5. Iterm 2 Notes
   * Make scroll history infinite
   * make sure new tab is in the directory of the old tab
+  * iTerm2 preferences are synced via Dropbox (not in this repo). In iTerm2, go to **Settings > General > Settings** and set "Load settings from a custom folder or URL" to the `iterm` folder in Dropbox.
 
 
 6. Add [relaxed theme](https://github.com/Relaxed-Theme/relaxed-terminal-themes#installation-1) to iterm2 by dowloading the colors and then importing them into iterm.

@@ -1,10 +1,3 @@
-# Warp replaces ZLE and completion — skip compinit/compdef in Warp
-if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
-  autoload -Uz compinit; compinit
-  autoload -Uz bashcompinit; bashcompinit
-  compdef _git stripe-git=git # this line specifically will fix git autocompletion
-fi
-
 # extra files in ~/.zsh/configs/pre , ~/.zsh/configs , and ~/.zsh/configs/post
 # these are loaded first, second, and third, respectively.
 _load_settings() {
@@ -40,6 +33,20 @@ _load_settings() {
   fi
 }
 _load_settings "$HOME/.zsh/configs"
+
+# Warp replaces ZLE and completion — skip compinit/compdef in Warp
+# Run compinit ONCE here, after all fpath additions from configs/pre/
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  autoload -Uz compinit
+  # Only regenerate dump file once per day (check modification time)
+  if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+  else
+    compinit -C  # skip security check, use cached dump
+  fi
+  autoload -Uz bashcompinit; bashcompinit
+  compdef _git stripe-git=git
+fi
 
 # Aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
@@ -81,7 +88,7 @@ if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
 
   # Try Homebrew first (macOS), then find npm-installed pure-prompt (Codespaces/Linux)
   if command -v brew &> /dev/null; then
-      fpath+=("$(brew --prefix)/share/zsh/site-functions")
+      fpath+=("/opt/homebrew/share/zsh/site-functions")
       _setup_pure_prompt
   else
       # Find pure-prompt installed via npm (handles nvm, mise, or standard npm)
