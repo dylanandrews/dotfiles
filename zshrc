@@ -137,16 +137,18 @@ fi
 unset PREFIX
 
 # Lazy-load NVM — only initializes on first use of nvm/node/npm/npx
+# NOTE: double-underscore prefix — Claude Code's shell snapshot drops single-underscore
+# function definitions but keeps wrappers that call them, breaking the lazy-load.
 export NVM_DIR="$HOME/.nvm"
-_lazy_load_nvm() {
+__lazy_load_nvm() {
   unset -f nvm node npm npx
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 }
-nvm()  { _lazy_load_nvm; nvm "$@"; }
-node() { _lazy_load_nvm; node "$@"; }
-npm()  { _lazy_load_nvm; npm "$@"; }
-npx()  { _lazy_load_nvm; npx "$@"; }
+nvm()  { __lazy_load_nvm; nvm "$@"; }
+node() { __lazy_load_nvm; node "$@"; }
+npm()  { __lazy_load_nvm; npm "$@"; }
+npx()  { __lazy_load_nvm; npx "$@"; }
 
 # Load local env if it exists
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
@@ -154,19 +156,21 @@ npx()  { _lazy_load_nvm; npx "$@"; }
 [[ -s "$HOME/.dotfiles/init.sh" ]] && source "$HOME/.dotfiles/init.sh"
 
 # Lazy-load pyenv — only initializes on first use of pyenv/python/python3/pip
+# NOTE: double-underscore prefix — Claude Code's shell snapshot drops single-underscore
+# function definitions but keeps wrappers that call them, breaking the lazy-load.
 if [[ -d "$HOME/.pyenv" ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
-    _lazy_load_pyenv() {
+    __lazy_load_pyenv() {
       unset -f pyenv python python3 pip pip3
       eval "$(pyenv init --path)" 2>/dev/null
       eval "$(pyenv init -)" 2>/dev/null
     }
-    pyenv()   { _lazy_load_pyenv; pyenv "$@"; }
-    python()  { _lazy_load_pyenv; python "$@"; }
-    python3() { _lazy_load_pyenv; python3 "$@"; }
-    pip()     { _lazy_load_pyenv; pip "$@"; }
-    pip3()    { _lazy_load_pyenv; pip3 "$@"; }
+    pyenv()   { __lazy_load_pyenv; pyenv "$@"; }
+    python()  { __lazy_load_pyenv; python "$@"; }
+    python3() { __lazy_load_pyenv; python3 "$@"; }
+    pip()     { __lazy_load_pyenv; pip "$@"; }
+    pip3()    { __lazy_load_pyenv; pip3 "$@"; }
 fi
 
 # Mise (only if installed)
