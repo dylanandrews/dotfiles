@@ -180,9 +180,13 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export BUNDLE_RUBYGEMS__PKG__GITHUB_COM="$NODE_AUTH_TOKEN"
 
-# GitHub token for Claude Code plugin auto-updates (private marketplace repos)
-# Reuses NODE_AUTH_TOKEN (classic PAT from ~/.dotfiles/init.sh) which already has repo scope
-export GITHUB_TOKEN="$NODE_AUTH_TOKEN"
+# GITHUB_TOKEN intentionally NOT exported.
+# Exporting it shadowed `gh`'s macOS keychain credential (which has `codespace`
+# scope) with the classic PAT from init.sh (which does not), breaking `gh cs ssh`.
+# `gh`, `git` (via `gh auth setup-git`), and Claude Code plugin fetches now
+# resolve GitHub creds via the keychain helper. NODE_AUTH_TOKEN (bundler/yarn)
+# remains exported above — do not remove it.
+# export GITHUB_TOKEN="$NODE_AUTH_TOKEN"
 
 # Add libpq bin to PATH (for Ruby LSP PostgreSQL gem compilation) - macOS only
 [[ -d "/opt/homebrew/opt/libpq/bin" ]] && export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
