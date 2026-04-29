@@ -6,6 +6,12 @@
 
 require 'open3'
 
+# Parse -C/--dir flag for multi-repo support
+if ARGV[0] == '-C' || ARGV[0] == '--dir'
+  ARGV.shift
+  Dir.chdir(ARGV.shift)
+end
+
 def run_git(command)
   stdout, stderr, status = Open3.capture3("git #{command}")
   [stdout.strip, stderr.strip, status.success?]

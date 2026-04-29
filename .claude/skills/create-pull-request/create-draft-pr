@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # create-draft-pr - Create a draft PR with the given title and body
-# Called by the create-pull-request skill after user approval
+# Called by the create-pull-request skill
 
 require 'open3'
 require 'optparse'
@@ -31,6 +31,7 @@ parser = OptionParser.new do |opts|
   opts.on('--title TITLE', 'PR title (required)') { |v| options[:title] = v }
   opts.on('--body-file FILE', 'File containing PR body/description (required)') { |v| options[:body_file] = v }
   opts.on('--base BRANCH', 'Base branch (default: main)') { |v| options[:base] = v }
+  opts.on('-C', '--dir DIR', 'Run in this directory') { |v| options[:dir] = v }
   opts.on('--dry-run', 'Show what would be done without creating PR') { options[:dry_run] = true }
   opts.on('-h', '--help', 'Show this help') do
     puts opts
@@ -51,6 +52,10 @@ if options[:title].nil? || options[:body_file].nil?
   puts parser
   exit 1
 end
+
+# Expand body_file to absolute path before chdir (it may be relative to session root)
+options[:body_file] = File.expand_path(options[:body_file]) if options[:body_file]
+Dir.chdir(options[:dir]) if options[:dir]
 
 unless File.exist?(options[:body_file])
   warn "Error: Body file not found: #{options[:body_file]}"
@@ -80,8 +85,7 @@ if options[:dry_run]
   puts "  1. Fetch origin/#{options[:base]}"
   puts "  2. Rebase on origin/#{options[:base]}"
   puts "  3. Push to origin/#{current_branch}"
-  puts '  4. Create draft PR'
-  puts '  5. Add review-me label'
+  puts '  4. Create draft PR with review-me label'
   puts
   puts 'PR Body:'
   puts File.read(options[:body_file])
@@ -99,12 +103,28 @@ end
 puts "Fetching origin/#{options[:base]}..."
 run_git("fetch origin #{options[:base]}")
 
-puts "Rebasing on origin/#{options[:base]}..."
-_, _, rebase_success = run_git("rebase origin/#{options[:base]}", exit_on_fail: false)
-unless rebase_success
-  warn 'Error: Rebase failed. Please resolve conflicts and try again.'
-  exit 1
+merge_base, _, _ = run_git("merge-base HEAD origin/#{options[:base]}")
+base_sha, _, _ = run_git("rev-parse origin/#{options[:base]}")
+
+if merge_base == base_sha
+  puts "Already based on latest origin/#{options[:base]}, skipping rebase."
+else
+  puts "Rebasing on origin/#{options[:base]}..."
+  _, _, rebase_success = run_git("rebase origin/#{options[:base]}", exit_on_fail: false)
+  unless rebase_success
+    warn 'Error: Rebase failed. Please resolve conflicts and try again.'
+    exit 1
+  end
 end
+
+# Refresh remote-tracking ref so --force-with-lease compares against current remote
+# rather than a SHA that may be stale if the branch was updated behind our back.
+# Use full refs/heads/<branch> on the source side; a short name can be misinterpreted
+# and cause the tracking ref to be deleted.
+run_git(
+  "fetch origin refs/heads/#{current_branch}:refs/remotes/origin/#{current_branch}",
+  exit_on_fail: false
+)
 
 # Push changes
 puts 'Pushing to origin...'
@@ -113,7 +133,7 @@ run_git('push origin HEAD --force-with-lease')
 # Create the PR
 puts 'Creating draft PR...'
 pr_url, pr_err, pr_success = run_command(
-  "gh pr create --base #{options[:base]} --title #{options[:title].shellescape} --body-file #{options[:body_file].shellescape} --draft",
+  "gh pr create --base #{options[:base]} --head #{current_branch.shellescape} --title #{options[:title].shellescape} --body-file #{options[:body_file].shellescape} --draft",
   exit_on_fail: false
 )
 
@@ -124,14 +144,18 @@ end
 
 puts pr_url
 
-# Add review-me label
-puts 'Adding review-me label...'
-run_command('gh pr edit --add-label "review-me"', exit_on_fail: false)
+# Try to add label (non-fatal)
+run_command('gh pr edit --add-label review-me', exit_on_fail: false)
 
 # Open in browser (skip in Codespaces)
 unless ENV['CODESPACES']
   run_command('gh pr view --web', exit_on_fail: false)
 end
 
+# Cleanup temp body file
+File.delete(options[:body_file]) if File.exist?(options[:body_file])
+
 puts
 puts 'Draft PR created successfully!'
+puts
+puts '⚠️  ACTION REQUIRED: Invoke /_monitor-pr to start monitoring CI and feedback.'

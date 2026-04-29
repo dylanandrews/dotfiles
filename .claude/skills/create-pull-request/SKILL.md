@@ -1,12 +1,12 @@
 ---
 name: create-pull-request
 description: Create a draft pull request with an AI-generated description based on commits, diffs, and plan documents
-allowed-tools: [Bash, Task, Read, Write]
+allowed-tools: [Bash(~/.claude/skills/create-pull-request/gather-pr-context), Bash(~/.claude/skills/create-pull-request/create-draft-pr:*), Task, Read, Write]
 ---
 
 ## Overview
 
-This skill creates draft pull requests by analyzing the current branch's changes and generating a comprehensive PR description. It uses a subagent to gather context without polluting the main conversation, and supports iterative refinement of the PR description before creation.
+This skill creates draft pull requests by analyzing the current branch's changes, generating a comprehensive PR description via a subagent, and creating the PR immediately.
 
 ## When to use this skill
 
@@ -27,11 +27,20 @@ Use this skill when the user:
 ## When NOT to use this skill
 
 - User is still actively making changes
-- User wants to create a PR in a different repository
 - User just wants to push changes without a PR
 - Branch is main/master (cannot create PR from main)
 
 ## Workflow
+
+### Step 0: Determine Target Repository
+
+Before running any commands, determine the git root of the repository you're working in:
+
+```bash
+REPO_DIR=$(git rev-parse --show-toplevel)
+```
+
+Pass `-C "$REPO_DIR"` to all `~/.claude/skills/create-pull-request/` script invocations throughout this workflow. For any direct git commands, use `git -C "$REPO_DIR"`. For direct `gh` commands, prefix with `cd "$REPO_DIR" &&`.
 
 ### Step 1: Spawn Context Gathering Subagent
 
@@ -51,46 +60,15 @@ Use the Task tool with:
 The subagent will return:
 - The generated PR description
 - The PR title
-- Its agent ID (for potential resume if changes needed)
 
-### Step 2: Present PR Description for Review
+### Step 2: Create the Draft PR and Start Monitoring
 
-Show the user the generated PR description and ask for approval:
-
-```
-Here's the draft PR description:
-
-**Title**: [title from subagent]
-
----
-[PR description from subagent]
----
-
-Would you like me to create the PR with this description, or would you like to make any changes?
-```
-
-### Step 3: Handle User Feedback
-
-**If user approves**: Proceed to Step 4.
-
-**If user requests changes**: Resume the subagent with the feedback:
-```
-Use the Task tool with:
-- resume: [agent_id from Step 1]
-- prompt: "The user requested the following changes to the PR description: [user's feedback]. Please update the PR description accordingly and return the revised version."
-```
-
-Then return to Step 2 with the updated description.
-
-### Step 4: Create the Draft PR
-
-Once approved:
-1. Generate a unique temp file path: `/tmp/pr-body-<timestamp>-<random>.md` (e.g., `/tmp/pr-body-1736000000-abc123.md`)
-2. Use the **Write tool** to write the approved PR body to that file (do NOT use Bash with redirects - this avoids zsh noclobber issues)
+1. Generate a unique temp file path in the current directory: `.pr-body-<timestamp>-<random>.md` (e.g., `.pr-body-1736000000-abc123.md`)
+2. Use the **Write tool** to write the PR body to that file (do NOT use Bash with redirects - this avoids zsh noclobber issues)
 3. Call the wrapper script to create the PR:
 
 ```bash
-~/.claude/skills/create-pull-request/create-draft-pr --title "<approved_title>" --body-file "<temp_file>"
+~/.claude/skills/create-pull-request/create-draft-pr -C "$REPO_DIR" --title "<title>" --body-file "<temp_file>"
 ```
 
 The script will:
@@ -99,6 +77,16 @@ The script will:
 3. Add the review-me label
 4. Open the PR in browser (unless in Codespaces)
 
+4. **Immediately after the PR is created**, invoke monitoring to watch CI and feedback:
+
+```
+Use the Skill tool to invoke: platoon-harness:monitor-pr
+```
+
+When invoking `platoon-harness:monitor-pr`, the monitor skill will determine the repo directory itself via `git rev-parse --show-toplevel`. Ensure you are still working in the correct repository context when invoking it.
+
+This schedules automatic checks every minute that fix CI failures and address reviewer feedback. The skill is NOT done until monitoring has been started.
+
 ## Subagent Prompt
 
 Use this prompt when spawning the context-gathering subagent:
@@ -106,12 +94,17 @@ Use this prompt when spawning the context-gathering subagent:
 ```
 You are generating a pull request description. Run the context gathering script and create a PR description based on its output.
 
+First, determine the target repository:
+REPO_DIR=$(git rev-parse --show-toplevel)
+
+Pass -C "$REPO_DIR" to all script invocations.
+
 ## Step 1: Gather Context
 
 Run this command to get all the context you need:
 
 ```bash
-~/.claude/skills/create-pull-request/gather-pr-context
+~/.claude/skills/create-pull-request/gather-pr-context -C "$REPO_DIR"
 ```
 
 This will output:
@@ -149,7 +142,25 @@ Claude Code
 <Checklist of post-merge tasks if any, e.g., config changes, secret updates. Use "- [ ] Task" format. If none, omit this section.>
 
 ## Testing
-<Checklist of manual/integration testing. Mark completed items with "- [x]". Do not include automated tests that run in CI.>
+<Testing checklist. Mark completed items with "- [x]".
+
+**CRITICAL: Do NOT include anything that CI already covers.** Linting, type checks, unit tests, integration tests, builds, security scans, and any other automated checks that run in the CI pipeline must be excluded. Reviewers can see CI status themselves - listing these items adds noise and wastes their time. If you're unsure whether something runs in CI, err on the side of excluding it.
+
+Organize remaining items into these categories as needed:
+
+### Pre-Deploy
+
+**Agent-verifiable** - Things Claude can test: running specific commands, e2e tests, triggering workflow runs, API verification with curl, log inspection, before/after comparisons, etc. Don't claim humans need to do things agents can do.
+
+**Human-required** - Things that genuinely require a human: visual UI appearance, physical device testing, browser-specific behavior requiring manual interaction, actions requiring permissions/access Claude doesn't have, third-party systems Claude can't access.
+
+### Post-Deploy
+
+**Agent-verifiable** - Things Claude can verify after merge: production smoke tests via API, checking monitoring dashboards via CLI, verifying deployed artifacts, triggering and monitoring post-deploy workflows.
+
+**Human-required** - Things requiring human verification after deploy: visual verification in production, testing on physical production devices, verifying integrations Claude can't access.
+
+If all testing is covered by CI, just say "CI covers all required testing for this change.">
 
 ## Artifacts
 <If a ticket number was extracted, include a link in this format:>
@@ -166,10 +177,17 @@ DESCRIPTION:
 <the full PR description in markdown>
 ```
 
+## Completion Checklist
+
+This skill is NOT done until ALL of these are true:
+- [ ] `create-draft-pr` script ran successfully
+- [ ] `platoon-harness:monitor-pr` invoked to start background monitoring
+
+If you see "ACTION REQUIRED: Invoke /_monitor-pr" in the script output and haven't done it yet, you are not finished (use `platoon-harness:monitor-pr` as the equivalent in this dotfiles environment).
+
 ## Important Notes
 
-1. **Always show the PR description to the user before creating** - never create a PR without explicit approval
+1. **Do not ask for approval** - generate the description and create the PR immediately
 2. **The subagent handles all context gathering** - the main conversation only sees the PR description
-3. **Resume the subagent for changes** - don't regenerate from scratch, resume to preserve context
-4. **Use the scripts** - don't run git commands directly, use the provided scripts
-5. **Write body with Write tool** - use a unique temp file path like `/tmp/pr-body-<timestamp>-<random>.md` and the Write tool (not Bash redirects, which fail with zsh noclobber)
+3. **Use the scripts** - don't run git commands directly, use the provided scripts
+4. **Write body with Write tool** - use a unique temp file path in the current directory like `.pr-body-<timestamp>-<random>.md` and the Write tool (not Bash redirects, which fail with zsh noclobber)
