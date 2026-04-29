@@ -194,7 +194,8 @@
     "plugin-dev@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
     "codex@openai-codex": false,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "betterup-compound@betterup-engineering": true
   },
   "extraKnownMarketplaces": {
     "claude-code-plugins": {
@@ -218,5 +219,8 @@
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-ansi",
+  "verbose": true,
+  "preferredNotifChannel": "iterm2_with_bell",
   "skipAutoPermissionPrompt": true
 }
