@@ -109,10 +109,11 @@ fi
 # Ensure starship config directory exists
 mkdir -p "$HOME/.config"
 
-# Codespaces-specific setup: install tools to match local Mac environment
-if [ -n "$CODESPACES" ]; then
+# Linux setup: install tools to match local Mac environment
+# Covers Codespaces, DevPod, and any other Linux dev environment.
+if [ "$(uname)" = "Linux" ]; then
     echo ""
-    echo "🖥️  Codespaces detected - installing additional tools..."
+    echo "🖥️  Linux environment detected - installing additional tools..."
 
     # Set zsh as default shell
     if command -v zsh &> /dev/null; then
@@ -120,10 +121,15 @@ if [ -n "$CODESPACES" ]; then
         sudo chsh -s "$(which zsh)" "$(whoami)" 2>/dev/null || true
     fi
 
-    # Install Pure prompt via npm
-    if ! command -v prompt &> /dev/null; then
+    # Install Pure prompt via npm.
+    # Set npm prefix to $HOME/.npm-global so globals land in a path
+    # that zshrc's pure-prompt search list already checks (mise's
+    # default lib dir at ~/.local/share/mise/installs/node/<version>/...
+    # is versioned and not in zshrc's list, so installs there are invisible).
+    if [ ! -d "$HOME/.npm-global/lib/node_modules/pure-prompt" ] && command -v npm &> /dev/null; then
         echo "💜 Installing Pure prompt..."
-        npm install --global pure-prompt 2>/dev/null || true
+        npm config set prefix "$HOME/.npm-global"
+        npm install --global pure-prompt
     fi
 
     # Install eza (modern ls replacement)
