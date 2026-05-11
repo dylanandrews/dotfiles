@@ -190,3 +190,13 @@ export BUNDLE_RUBYGEMS__PKG__GITHUB_COM="$NODE_AUTH_TOKEN"
 
 # Add libpq bin to PATH (for Ruby LSP PostgreSQL gem compilation) - macOS only
 [[ -d "/opt/homebrew/opt/libpq/bin" ]] && export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# npm global bin (Codex CLI lives here on Linux DevPods because install.sh
+# sets `npm config set prefix "$HOME/.npm-global"`). Defensive guard so this
+# is a no-op on machines without the directory.
+[[ -d "$HOME/.npm-global/bin" ]] && export PATH="$HOME/.npm-global/bin:$PATH"
+
+# git-ai shim — cross-platform (works on Mac AND Linux DevPods).
+# Originally added by git-ai installer with hardcoded macOS path; rewritten
+# to use $HOME so the same line works in DevPod where path is /home/vscode/.git-ai/bin.
+[[ -d "$HOME/.git-ai/bin" ]] && export PATH="$HOME/.git-ai/bin:$PATH"

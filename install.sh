@@ -132,6 +132,13 @@ if [ "$(uname)" = "Linux" ]; then
         npm install --global pure-prompt
     fi
 
+    # Install Codex CLI (used by betterup-toolkit:codex-peer-review skill
+    # and code-review-for-branch-codex slash command).
+    if ! command -v codex &> /dev/null && command -v npm &> /dev/null; then
+        echo "🤖 Installing Codex CLI..."
+        npm install --global @openai/codex
+    fi
+
     # Install eza (modern ls replacement)
     if ! command -v eza &> /dev/null; then
         echo "📂 Installing eza..."
