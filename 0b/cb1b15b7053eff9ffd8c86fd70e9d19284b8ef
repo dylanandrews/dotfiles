@@ -1,0 +1,27 @@
+bashrc
+  s_cb477425cea331::t_b0a1b6fb12cc4d 8-12
+  s_cb477425cea331::t_636d2ba926b0bf 13-14
+.claude/settings.json
+  s_cb477425cea331::t_b511121c885246 196
+install.sh
+  s_cb477425cea331::t_f931ac81264117 135-141
+zshrc
+  s_cb477425cea331::t_4bbc442d56765c 194-198
+  s_cb477425cea331::t_6cfc08686fd47a 199-202
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "0bcb1b15b7053eff9ffd8c86fd70e9d19284b8ef",
+  "prompts": {},
+  "sessions": {
+    "s_cb477425cea331": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "dd42c30b-9cec-454c-ab13-863748e5ea8b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Dylan Andrews <11525911+DylanAndrews@users.noreply.github.com>"
+    }
+  }
+}
